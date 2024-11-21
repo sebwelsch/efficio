@@ -7,11 +7,14 @@ assignees: ''
 
 ---
 
-Som bruger vil jeg 
+### Som bruger vil jeg
 
-Acceptkriterier:
+## Acceptkriterier:
+### Frontend:
+- [ ] 
+- [ ] 
 - [ ]
-- [ ]
-- [ ]
-- [ ]
+### Backend:
+- [ ] 
+- [ ] 
 - [ ]
