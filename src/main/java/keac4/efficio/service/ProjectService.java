@@ -1,4 +1,4 @@
-package keac4.efficio.Service;
+package keac4.efficio.service;
 
 public class ProjectService {
 }

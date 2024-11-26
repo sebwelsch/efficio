@@ -1,4 +1,4 @@
-package keac4.efficio.Repository;
+package keac4.efficio.repository;
 
 public class ProjectRepository {
 }
