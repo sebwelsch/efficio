@@ -35,6 +35,6 @@ public class UserController {
 
         userService.saveNewUser(newUser);
         redirectAttributes.addFlashAttribute("success", "Din konto blev oprettet. Du kan nu logge ind.");
-        return "redirect:/signup";
+        return "redirect:/login";
     }
 }
