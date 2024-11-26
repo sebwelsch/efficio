@@ -28,13 +28,19 @@ public class UserController {
 
     @PostMapping("/signup")
     public String saveNewUser(@ModelAttribute User newUser, Model model, RedirectAttributes redirectAttributes) {
-        if (userService.findByUsername(newUser.getUsername()) == null) {
-            model.addAttribute("error", "Dette username er allerede registreret");
+        if (userService.findByUsername(newUser.getUsername()) != null) {
+            model.addAttribute("error", "This username is already in use");
             return "redirect:/signup";
         }
 
+        // This code compares and confirms the passwords are equal to each other.
+        if(!newUser.getPassword().equals(newUser.getConfirmPassword())) {
+            model.addAttribute("error", "Passwords do not match");
+            return "signUp";
+        }
+
         userService.saveNewUser(newUser);
-        redirectAttributes.addFlashAttribute("success", "Din konto blev oprettet. Du kan nu logge ind.");
+        redirectAttributes.addFlashAttribute("success", "Your account has been created. You can now log in");
         return "redirect:/signup";
     }
 }
