@@ -1,30 +1,35 @@
 package keac4.efficio.model;
 
-public class Task {
-    private int taskId;
+public class Subproject {
     private int subprojectId;
+    private int projectId;
     private String name;
     private String description;
+    private String startDate;
+    private String deadline;
     private int expectedTime;
 
-    public Task() {
+    public Subproject() {
 
     }
 
-    public Task(int taskId, int subprojectId, String name, String description, int expectedTime) {
-        this.taskId = taskId;
+    public Subproject(int projectId, int subprojectId, String name, String description, String startDate, String deadline, int expectedTime) {
+        this.projectId = projectId;
         this.subprojectId = subprojectId;
         this.name = name;
         this.description = description;
+        this.startDate = startDate;
+        this.deadline = deadline;
         this.expectedTime = expectedTime;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
     public int getSubprojectId() {
@@ -33,6 +38,14 @@ public class Task {
 
     public void setSubprojectId(int subprojectId) {
         this.subprojectId = subprojectId;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public String getName() {
@@ -49,6 +62,14 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public int getExpectedTime() {

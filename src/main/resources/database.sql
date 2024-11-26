@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS efficio_db;
+
+USE efficio_db;
+
 CREATE TABLE IF NOT EXISTS users
 (
     user_id  INT AUTO_INCREMENT PRIMARY KEY,
