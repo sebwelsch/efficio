@@ -1,6 +1,7 @@
 package keac4.efficio.model;
 
 public class Project {
+
     private int projectId;
     private String name;
     private String description;
@@ -19,15 +20,6 @@ public class Project {
         this.description = description;
         this.deadline = deadline;
         this.expectedTime = expectedTime;
-    }
-
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
     }
 
     public int getProjectId() {
@@ -52,6 +44,14 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
     public String getDeadline() {

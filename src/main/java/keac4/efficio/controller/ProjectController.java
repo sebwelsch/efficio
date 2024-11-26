@@ -10,18 +10,40 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
+@RequestMapping()
 public class ProjectController {
 
     private final ProjectService projectService;
 
+
     @Autowired
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
+    }
+
+    @GetMapping("/project/overview")
+    public String showProjectsOverview(Model model) {
+        model.addAttribute("projects", projectService.getAllProjects());
+        return "projects-overview";
+    }
+
+    @GetMapping("/project/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("project", new Project());
+        return "add-project";
+    }
+    @PostMapping("/project/add")
+    public String addProject(@ModelAttribute Project project, Model model) {
+        projectService.addProject(project);
+        model.addAttribute("message", "project added successfully");
+        return "redirect:/project/overview";
+
     }
 
     @GetMapping("/project/{projectId}")
@@ -45,5 +67,6 @@ public class ProjectController {
         model.addAttribute("subprojects", subprojects);
         return "projectOverview";
     }
+
 
 }

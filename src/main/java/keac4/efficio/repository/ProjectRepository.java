@@ -2,24 +2,39 @@ package keac4.efficio.repository;
 
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
 public class ProjectRepository {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public ProjectRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public void addProject(Project newProject) {
+        String query = "INSERT INTO projects (name, description, start_date, deadline, expected_time) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(query,
+                newProject.getName(),
+                newProject.getDescription(),
+                newProject.getStartDate(),
+                newProject.getDeadline(),
+                newProject.getExpectedTime());
+    }
+
+    public List<Project> findAll() {
+        String query = "SELECT * FROM projects";
+        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Project.class));
+    }
+
+    public List<Subproject> getSubProjectsByProjectId(int projectId) {
+        String query = "SELECT * FROM subprojects WHERE project_id = ?";
+        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Subproject.class));
     }
 
     public boolean doesUserHaveAccess(int projectId, int userId) {
@@ -32,9 +47,6 @@ public class ProjectRepository {
         String query = "SELECT * FROM projects WHERE project_id = ?";
         return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Project.class), projectId);
     }
+    
 
-    public List<Subproject> getSubProjectsByProjectId(int projectId) {
-        String query = "SELECT * FROM subprojects WHERE project_id = ?";
-        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Subproject.class));
-    }
 }
