@@ -1,10 +1,16 @@
 package keac4.efficio.repository;
 
 import keac4.efficio.model.Project;
+import keac4.efficio.model.Subproject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class ProjectRepository {
@@ -25,5 +31,10 @@ public class ProjectRepository {
     public Project getProjectById(int projectId) {
         String query = "SELECT * FROM projects WHERE project_id = ?";
         return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Project.class), projectId);
+    }
+
+    public List<Subproject> getSubProjectsByProjectId(int projectId) {
+        String query = "SELECT * FROM subprojects WHERE project_id = ?";
+        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Subproject.class));
     }
 }

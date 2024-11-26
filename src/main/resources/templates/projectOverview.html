@@ -8,5 +8,33 @@
 </head>
 <body>
 
+<header>
+
+</header>
+
+<div class="side-nav">
+
+</div>
+
+<div class="info-container">
+    <h1 th:text="${project.name}"></h1>
+
+    <div>
+        <p th:text="${project.description}"></p>
+    </div>
+</div>
+
+<div class="task-container">
+    <h1>Tasks</h1>
+</div>
+
+<div class="list-container">
+    <h1>Subprojects</h1>
+    <div th:each="subproject: ${subprojects}">
+        <p th:text="${subproject.name}"></p>
+    </div>
+</div>
+
+
 </body>
 </html>

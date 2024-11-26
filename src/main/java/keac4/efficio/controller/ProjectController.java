@@ -2,6 +2,7 @@ package keac4.efficio.controller;
 
 import jakarta.servlet.http.HttpSession;
 import keac4.efficio.model.Project;
+import keac4.efficio.model.Subproject;
 import keac4.efficio.model.User;
 import keac4.efficio.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class ProjectController {
@@ -38,7 +41,8 @@ public class ProjectController {
 
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
-
+        List<Subproject> subprojects = projectService.getSubProjectsByProjectId(projectId);
+        model.addAttribute("subprojects", subprojects);
         return "projectOverview";
     }
 
