@@ -1,4 +1,4 @@
-package keac4.efficio.Service;
+package keac4.efficio.service;
 
 import keac4.efficio.model.User;
 import keac4.efficio.repository.UserRepository;
@@ -10,22 +10,19 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-
     public void saveNewUser(User newUser) {
         String hashedPassword = passwordEncoder.encode(newUser.getPassword());
         newUser.setPassword(hashedPassword);
-        userRepository.save(newUser);
+        userRepository.saveNewUser(newUser);
     }
 
 
