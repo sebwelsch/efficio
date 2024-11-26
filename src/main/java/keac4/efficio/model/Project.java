@@ -9,6 +9,19 @@ public class Project {
     private String deadline;
     private int expectedTime;
 
+    public Project() {
+
+    }
+
+    public Project(String startDate, int projectId, String name, String description, String deadline, int expectedTime) {
+        this.startDate = startDate;
+        this.projectId = projectId;
+        this.name = name;
+        this.description = description;
+        this.deadline = deadline;
+        this.expectedTime = expectedTime;
+    }
+
     public int getProjectId() {
         return projectId;
     }
