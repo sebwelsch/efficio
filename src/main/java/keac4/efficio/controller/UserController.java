@@ -1,7 +1,7 @@
 package keac4.efficio.controller;
 
 import keac4.efficio.model.User;
-import keac4.efficio.Service.UserService;
+import keac4.efficio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,18 +23,18 @@ public class UserController {
     @GetMapping("/signup")
     public String showSignUpPage(Model model) {
         model.addAttribute("newUser", new User());
-        return "signup";
+        return "signUp";
     }
 
     @PostMapping("/signup")
     public String saveNewUser(@ModelAttribute User newUser, Model model, RedirectAttributes redirectAttributes) {
-        if (userService.findByUsername(newUser.getUsername()) != null) {
+        if (userService.findByUsername(newUser.getUsername()) == null) {
             model.addAttribute("error", "Dette username er allerede registreret");
-            return "signup";
+            return "redirect:/signup";
         }
 
         userService.saveNewUser(newUser);
         redirectAttributes.addFlashAttribute("success", "Din konto blev oprettet. Du kan nu logge ind.");
-        return "redirect:/login";
+        return "redirect:/signup";
     }
 }
