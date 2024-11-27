@@ -1,4 +1,4 @@
-package keac4.efficio.service;
+package keac4.efficio.Service;
 
 import keac4.efficio.model.User;
 import keac4.efficio.repository.UserRepository;
