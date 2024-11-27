@@ -28,22 +28,40 @@ public class ProjectController {
     }
 
     @GetMapping("/project/overview")
-    public String showProjectsOverview(Model model) {
-        model.addAttribute("projects", projectService.getAllProjects());
+    public String showProjectsOverview(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) {
+            redirectAttributes.addFlashAttribute("message", "You need to log in to access this page");
+            return "redirect:/login";
+        }
+        model.addAttribute("projects", projectService.getProjectsByUserId(sessionUser.getUserId()));
         return "projects-overview";
     }
 
     @GetMapping("/project/add")
-    public String showAddForm(Model model) {
+    public String showAddForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) {
+            redirectAttributes.addFlashAttribute("message", "You need to log in to access this page");
+            return "redirect:/login";
+        }
         model.addAttribute("project", new Project());
         return "add-project";
     }
-    @PostMapping("/project/add")
-    public String addProject(@ModelAttribute Project project, Model model) {
-        projectService.addProject(project);
-        model.addAttribute("message", "project added successfully");
-        return "redirect:/project/overview";
 
+    @PostMapping("/project/add")
+    public String addProject(@ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) {
+            redirectAttributes.addFlashAttribute("error", "You need to log in to add a project");
+            return "redirect:/login";
+        }
+
+        // Add project and associate it with the logged-in user. Keyholder helps it connect to the person making it.
+        projectService.addProject(project, sessionUser.getUserId());
+
+        redirectAttributes.addFlashAttribute("message", "Project added successfully");
+        return "redirect:/project/overview";
     }
 
     @GetMapping("/project/{projectId}")

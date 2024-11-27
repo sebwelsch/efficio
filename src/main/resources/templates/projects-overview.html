@@ -1,51 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
-    <title>Projects Overview</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Projects</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        /* Add some basic styling for the project boxes */
+        .project-box {
+            width: 300px;
+            margin: 10px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f4f4f4;
+            transition: background-color 0.3s;
+            cursor: pointer;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+
+        .project-box:hover {
+            background-color: #e0e0e0;
         }
-        th {
-            background-color: #f2f2f2;
-            text-align: left;
+
+        .project-box h3 {
+            margin-top: 0;
+            font-size: 18px;
         }
-        tr:hover {
-            background-color: #f5f5f5;
+
+        .projects-container {
+            display: flex;
+            flex-wrap: wrap;
         }
-        a {
-            text-decoration: none;
-            color: blue;
+
+        .message {
+            color: red;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-<h1>Projects Overview</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Start Date</th>
-        <th>Deadline</th>
-        <th>Expected Time (hours)</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="project : ${projects}">
-        <td th:text="${project.name}"></td>
-        <td th:text="${project.description}"></td>
-        <td th:text="${project.startDate}"></td>
-        <td th:text="${project.deadline}"></td>
-        <td th:text="${project.expectedTime}"></td>
-    </tr>
-    </tbody>
-</table>
-<a href="/project/add">Add New Project</a>
+<h1>Your Projects Overview</h1>
+<div th:if="${message}" class="message">
+    <p th:text="${message}"></p>
+</div>
+
+<!-- If the user has no projects -->
+<div th:if="${#lists.isEmpty(projects)}">
+    <p>You don't have any projects yet.</p>
+</div>
+
+<!-- Projects overview container -->
+<div class="projects-container">
+    <div th:each="project : ${projects}">
+        <div class="project-box" th:onclick="'window.location.href=\'/project/' + ${project.projectId} + '\''">
+            <h3 th:text="${project.name}"></h3>
+            <p th:text="${project.description}"></p>
+            <p><strong>Start Date:</strong> <span th:text="${project.startDate}"></span></p>
+            <p><strong>Deadline:</strong> <span th:text="${project.deadline}"></span></p>
+        </div>
+    </div>
+</div>
 </body>
 </html>
