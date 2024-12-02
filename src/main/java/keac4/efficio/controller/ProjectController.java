@@ -37,7 +37,7 @@ public class ProjectController {
         return "userOverview";
     }
 
-    @GetMapping("/project/add")
+    @GetMapping("/project/create")
     public String showAddForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
@@ -45,11 +45,11 @@ public class ProjectController {
             return "redirect:/login";
         }
         model.addAttribute("project", new Project());
-        return "addProject";
+        return "createProject";
     }
 
-    @PostMapping("/project/add")
-    public String addProject(@ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
+    @PostMapping("/project/create")
+    public String createProject(@ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             redirectAttributes.addFlashAttribute("error", "You need to log in to create a project");
@@ -57,7 +57,7 @@ public class ProjectController {
         }
 
         // Create project and associate it with the logged-in user. Keyholder helps it connect to the person making it.
-        projectService.addProject(project, loggedInUser.getUserId());
+        projectService.createProject(project, loggedInUser.getUserId());
 
         redirectAttributes.addFlashAttribute("message", "Project added successfully");
         return "redirect:/overview";

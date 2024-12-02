@@ -18,8 +18,8 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public void addProject(Project project, int userId) {
-        int projectId = projectRepository.addProject(project);
+    public void createProject(Project project, int userId) {
+        int projectId = projectRepository.createProject(project);
         // Links the project to the user using the keyholder method.
         projectRepository.linkProjectToUser(projectId, userId);
     }

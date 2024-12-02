@@ -22,7 +22,7 @@ public class ProjectRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int addProject(Project newProject) {
+    public int createProject(Project newProject) {
         String query = "INSERT INTO projects (name, description, start_date, deadline, expected_time) VALUES (?, ?, ?, ?, ?)";
 
         // Insert the project and retrieve the generated ID. It needs to be written like this as it needs the generated keys so that it can pass those values onto the next holder.
