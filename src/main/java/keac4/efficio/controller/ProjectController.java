@@ -35,7 +35,7 @@ public class ProjectController {
             return "redirect:/login";
         }
         model.addAttribute("projects", projectService.getProjectsByUserId(sessionUser.getUserId()));
-        return "projects-overview";
+        return "userOverview";
     }
 
     @GetMapping("/project/add")
@@ -46,7 +46,7 @@ public class ProjectController {
             return "redirect:/login";
         }
         model.addAttribute("project", new Project());
-        return "add-project";
+        return "addProject";
     }
 
     @PostMapping("/project/add")

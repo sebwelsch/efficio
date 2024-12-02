@@ -42,7 +42,6 @@ public class UserController {
         }
 
         userService.saveNewUser(newUser);
-        redirectAttributes.addFlashAttribute("success", "Your account has been created. You can now log in");
         return "redirect:/signup";
     }
 
