@@ -30,7 +30,7 @@ public class ProjectController {
     public String showProjectsOverview(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
-            redirectAttributes.addFlashAttribute("message", "You need to log in to access this page");
+            redirectAttributes.addFlashAttribute("error", "You need to log in to access this page");
             return "redirect:/login";
         }
         model.addAttribute("projects", projectService.getProjectsByUserId(loggedInUser.getUserId()));
@@ -41,7 +41,7 @@ public class ProjectController {
     public String showAddForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
-            redirectAttributes.addFlashAttribute("message", "You need to log in to access this page");
+            redirectAttributes.addFlashAttribute("error", "You need to log in to access this page");
             return "redirect:/login";
         }
         model.addAttribute("project", new Project());
@@ -59,7 +59,7 @@ public class ProjectController {
         // Create project and associate it with the logged-in user. Keyholder helps it connect to the person making it.
         projectService.createProject(project, loggedInUser.getUserId());
 
-        redirectAttributes.addFlashAttribute("message", "Project added successfully");
+        redirectAttributes.addFlashAttribute("error", "Project added successfully");
         return "redirect:/overview";
     }
 
