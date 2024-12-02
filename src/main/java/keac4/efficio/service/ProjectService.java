@@ -18,26 +18,30 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public void addProject(Project project, int userId) {
-        int projectId = projectRepository.addProject(project);
+    public void createProject(Project project, int userId) {
+        int projectId = projectRepository.createProject(project);
         // Links the project to the user using the keyholder method.
         projectRepository.linkProjectToUser(projectId, userId);
+    }
+
+    public void createSubproject(Subproject subproject, int projectId) {
+        projectRepository.createSubproject(subproject, projectId);
     }
 
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
 
-    public boolean doesUserHaveAccess(int projectId, int userId) {
-        return projectRepository.doesUserHaveAccess(projectId, userId);
-    }
-
     public Project getProjectById(int projectId) {
         return projectRepository.getProjectById(projectId);
     }
 
-    public List<Subproject> getSubProjectsByProjectId(int projectId) {
-        return projectRepository.getSubProjectsByProjectId(projectId);
+    public Subproject getSubprojectById(int subprojectId) {
+        return projectRepository.getSubprojectById(subprojectId);
+    }
+
+    public List<Subproject> getAllSubprojectsByProjectId(int projectId) {
+        return projectRepository.getAllSubprojectsByProjectId(projectId);
     }
 
     public List<Project> getProjectsByUserId(int userId) {

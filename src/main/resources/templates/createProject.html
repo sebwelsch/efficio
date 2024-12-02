@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Create project - Efficio</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<h1>Create a new project</h1>
+
+<form th:action="@{/project/create}" th:object="${project}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required/>
+    <br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" th:field="*{description}"></textarea>
+    <br>
+
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" th:field="*{startDate}"/>
+    <br>
+
+    <label for="deadline">Deadline:</label>
+    <input type="date" id="deadline" th:field="*{deadline}"/>
+    <br>
+
+    <label for="expectedTime">Expected Time (hours):</label>
+    <input type="number" id="expectedTime" th:field="*{expectedTime}"/>
+    <br>
+
+    <button type="submit">Create project</button>
+</form>
+
+</body>
+</html>

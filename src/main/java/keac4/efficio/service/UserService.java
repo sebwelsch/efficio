@@ -25,8 +25,11 @@ public class UserService {
         userRepository.saveNewUser(newUser);
     }
 
-
     public boolean authenticate(String inputPassword, String hashedPassword) {
         return passwordEncoder.matches(inputPassword, hashedPassword);
+    }
+
+    public boolean doesUserHaveAccess(int projectId, int userId) {
+        return userRepository.doesUserHaveAccess(projectId, userId);
     }
 }

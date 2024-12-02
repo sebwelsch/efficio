@@ -2,21 +2,21 @@ package keac4.efficio.model;
 
 public class Task {
     private int taskId;
-    private int subprojectId;
     private String name;
     private String description;
     private int expectedTime;
+    private int subprojectId;
 
     public Task() {
 
     }
 
-    public Task(int taskId, int subprojectId, String name, String description, int expectedTime) {
+    public Task(int taskId, String name, String description, int expectedTime, int subprojectId) {
         this.taskId = taskId;
-        this.subprojectId = subprojectId;
         this.name = name;
         this.description = description;
         this.expectedTime = expectedTime;
+        this.subprojectId = subprojectId;
     }
 
     public int getTaskId() {
