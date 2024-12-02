@@ -36,7 +36,7 @@ public class UserController {
         }
 
         // This code compares and confirms the passwords are equal to each other.
-        if(!newUser.getPassword().equals(newUser.getConfirmPassword())) {
+        if (!newUser.getPassword().equals(newUser.getConfirmPassword())) {
             model.addAttribute("error", "Passwords do not match");
             return "signUp";
         }
