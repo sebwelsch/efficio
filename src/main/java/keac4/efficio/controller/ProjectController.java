@@ -52,11 +52,11 @@ public class ProjectController {
     public String addProject(@ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
-            redirectAttributes.addFlashAttribute("error", "You need to log in to add a project");
+            redirectAttributes.addFlashAttribute("error", "You need to log in to create a project");
             return "redirect:/login";
         }
 
-        // Add project and associate it with the logged-in user. Keyholder helps it connect to the person making it.
+        // Create project and associate it with the logged-in user. Keyholder helps it connect to the person making it.
         projectService.addProject(project, loggedInUser.getUserId());
 
         redirectAttributes.addFlashAttribute("message", "Project added successfully");

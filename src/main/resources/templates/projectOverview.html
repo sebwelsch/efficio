@@ -30,6 +30,9 @@
 
 <div class="list-container">
     <h1>Subprojects</h1>
+    <a href="">
+        <button>Create subproject</button>
+    </a>
     <div th:each="subproject: ${subprojects}">
         <p th:text="${subproject.name}"></p>
     </div>

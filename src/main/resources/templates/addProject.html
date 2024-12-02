@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Add Project</title>
+    <title>Create project</title>
 </head>
 <body>
-<h1>Add a New Project</h1>
+<h1>Create a new project</h1>
 <form th:action="@{/project/add}" th:object="${project}" method="post">
     <label for="name">Name:</label>
     <input type="text" id="name" th:field="*{name}" required/>
@@ -26,7 +26,7 @@
     <input type="number" id="expectedTime" th:field="*{expectedTime}"/>
     <br>
 
-    <button type="submit">Add Project</button>
+    <button type="submit">Create project</button>
 </form>
 </body>
 </html>
