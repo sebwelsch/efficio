@@ -47,8 +47,6 @@ public class ProjectRepository {
         jdbcTemplate.update(query, projectId, userId);
     }
 
-
-
     public List<Project> findAll() {
         String query = "SELECT * FROM projects";
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Project.class));
@@ -56,7 +54,7 @@ public class ProjectRepository {
 
     public List<Subproject> getSubProjectsByProjectId(int projectId) {
         String query = "SELECT * FROM subprojects WHERE project_id = ?";
-        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Subproject.class));
+        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Subproject.class), projectId);
     }
 
     public boolean doesUserHaveAccess(int projectId, int userId) {
