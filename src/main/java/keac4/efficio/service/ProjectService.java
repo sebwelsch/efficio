@@ -24,6 +24,10 @@ public class ProjectService {
         projectRepository.linkProjectToUser(projectId, userId);
     }
 
+    public void createSubproject(Subproject subproject, int projectId) {
+        projectRepository.createSubproject(subproject, projectId);
+    }
+
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
@@ -32,8 +36,12 @@ public class ProjectService {
         return projectRepository.getProjectById(projectId);
     }
 
-    public List<Subproject> getSubProjectsByProjectId(int projectId) {
-        return projectRepository.getSubProjectsByProjectId(projectId);
+    public Subproject getSubprojectById(int subprojectId) {
+        return projectRepository.getSubprojectById(subprojectId);
+    }
+
+    public List<Subproject> getAllSubprojectsByProjectId(int projectId) {
+        return projectRepository.getAllSubprojectsByProjectId(projectId);
     }
 
     public List<Project> getProjectsByUserId(int userId) {

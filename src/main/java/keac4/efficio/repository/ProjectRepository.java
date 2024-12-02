@@ -2,7 +2,6 @@ package keac4.efficio.repository;
 
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
-import keac4.efficio.model.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -42,6 +41,18 @@ public class ProjectRepository {
         return keyHolder.getKey().intValue();
     }
 
+    public void createSubproject(Subproject subproject, int projectId) {
+        String query = "INSERT INTO subprojects (project_id, name, description, start_date, deadline, expected_time) VALUES (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(query,
+                projectId,
+                subproject.getName(),
+                subproject.getDescription(),
+                subproject.getStartDate(),
+                subproject.getDeadline(),
+                subproject.getExpectedTime()
+                );
+    }
+
     // Link the project to the user by adding an entry in the project_users table
     public void linkProjectToUser(int projectId, int userId) {
         String query = "INSERT INTO project_users (project_id, user_id) VALUES (?, ?)";
@@ -53,15 +64,38 @@ public class ProjectRepository {
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Project.class));
     }
 
-    public List<Subproject> getSubProjectsByProjectId(int projectId) {
+    public List<Subproject> getAllSubprojectsByProjectId(int projectId) {
         String query = "SELECT * FROM subprojects WHERE project_id = ?";
-        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Subproject.class), projectId);
+        return jdbcTemplate.query(query, new Object[]{projectId}, (rs, rowNum) ->
+                new Subproject(
+                        rs.getInt("subproject_id"),
+                        rs.getInt("project_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("start_date"),
+                        rs.getString("deadline"),
+                        rs.getInt("expected_time")
+                ));
     }
 
     public Project getProjectById(int projectId) {
         String query = "SELECT * FROM projects WHERE project_id = ?";
         return jdbcTemplate.queryForObject(query, new Integer[]{projectId}, (rs, rowNum) ->
                 new Project(
+                        rs.getInt("project_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("start_date"),
+                        rs.getString("deadline"),
+                        rs.getInt("expected_time")
+                ));
+    }
+
+    public Subproject getSubprojectById(int subprojectId) {
+        String query = "SELECT * FROM subprojects WHERE subproject_id = ?";
+        return jdbcTemplate.queryForObject(query, new Integer[]{subprojectId}, (rs, rowNum) ->
+                new Subproject(
+                        rs.getInt("subproject_id"),
                         rs.getInt("project_id"),
                         rs.getString("name"),
                         rs.getString("description"),

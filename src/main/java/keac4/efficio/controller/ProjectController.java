@@ -30,8 +30,8 @@ public class ProjectController {
     }
 
     @GetMapping("/overview")
-    public String showProjectsOverview(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+    public String showUserOverview(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        // Checking access permissions
         String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
         if (userHasAccess != null) {
             return userHasAccess;
@@ -43,8 +43,8 @@ public class ProjectController {
     }
 
     @GetMapping("/project/create")
-    public String showAddForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+    public String showCreateProjectPage(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        // Checking access permissions
         String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
         if (userHasAccess != null) {
             return userHasAccess;
@@ -56,7 +56,7 @@ public class ProjectController {
 
     @PostMapping("/project/create")
     public String createProject(@ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
-        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+        // Checking access permissions
         String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
         if (userHasAccess != null) {
             return userHasAccess;
@@ -66,13 +66,13 @@ public class ProjectController {
         User userSession = (User) session.getAttribute("userSession");
         projectService.createProject(project, userSession.getUserId());
 
-        redirectAttributes.addFlashAttribute("error", "Project added successfully");
+        redirectAttributes.addFlashAttribute("success", "Project added successfully");
         return "redirect:/overview";
     }
 
     @GetMapping("/project/{projectId}")
     public String showProjectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+        // Checking access permissions
         String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
         if (userHasAccess != null) {
             return userHasAccess;
@@ -80,19 +80,47 @@ public class ProjectController {
 
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
-        List<Subproject> subprojects = projectService.getSubProjectsByProjectId(projectId);
+        List<Subproject> subprojects = projectService.getAllSubprojectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
         return "projectOverview";
     }
 
-    @GetMapping("/project/{projectId}/subproject/{subprojectId}")
-    public String showSubprojectPage(@PathVariable int projectId, @PathVariable int subprojectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+    @GetMapping("/project/{projectId}/subproject/create")
+    public String showCreateSubprojectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        // Checking access permissions
         String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
         if (userHasAccess != null) {
             return userHasAccess;
         }
 
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("subproject", new Subproject());
+        return "createSubproject";
+    }
+
+    @PostMapping("/project/{projectId}/subproject/create")
+    public String createSubproject(@ModelAttribute Subproject subproject, @PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        // Checking access permissions
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userHasAccess != null) {
+            return userHasAccess;
+        }
+
+        projectService.createSubproject(subproject, projectId);
+
+        return "redirect:/project/" + projectId;
+    }
+
+    @GetMapping("/project/{projectId}/subproject/{subprojectId}")
+    public String showSubprojectPage(@PathVariable int projectId, @PathVariable int subprojectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        // Checking access permissions
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userHasAccess != null) {
+            return userHasAccess;
+        }
+
+        Subproject subproject = projectService.getSubprojectById(subprojectId);
+        model.addAttribute("subproject", subproject);
         return "projectOverview";
     }
 }
