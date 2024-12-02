@@ -2,7 +2,7 @@ package keac4.efficio.controller;
 
 import jakarta.servlet.http.HttpSession;
 import keac4.efficio.model.User;
-import keac4.efficio.Service.UserService;
+import keac4.efficio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
