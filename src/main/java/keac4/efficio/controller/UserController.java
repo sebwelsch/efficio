@@ -63,7 +63,7 @@ public class UserController {
         return "login";
     }
 
-    //Endpoint to invalidate the users session
+    //Endpoint to invalidate the users sessions
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
