@@ -58,12 +58,6 @@ public class ProjectRepository {
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Subproject.class), projectId);
     }
 
-    public boolean doesUserHaveAccess(int projectId, int userId) {
-        String query = "SELECT COUNT(*) FROM project_users WHERE project_id = ? AND user_id = ?";
-        Integer count = jdbcTemplate.queryForObject(query, Integer.class, projectId, userId);
-        return count != null && count > 0;
-    }
-
     public Project getProjectById(int projectId) {
         String query = "SELECT * FROM projects WHERE project_id = ?";
         return jdbcTemplate.queryForObject(query, new Integer[]{projectId}, (rs, rowNum) ->

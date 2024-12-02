@@ -28,10 +28,6 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public boolean doesUserHaveAccess(int projectId, int userId) {
-        return projectRepository.doesUserHaveAccess(projectId, userId);
-    }
-
     public Project getProjectById(int projectId) {
         return projectRepository.getProjectById(projectId);
     }

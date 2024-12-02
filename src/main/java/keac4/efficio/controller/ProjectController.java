@@ -1,6 +1,7 @@
 package keac4.efficio.controller;
 
 import jakarta.servlet.http.HttpSession;
+import keac4.efficio.component.ValidateAccess;
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
 import keac4.efficio.model.User;
@@ -20,44 +21,50 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final ValidateAccess validateAccess;
 
     @Autowired
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, ValidateAccess validateAccess) {
         this.projectService = projectService;
+        this.validateAccess = validateAccess;
     }
 
     @GetMapping("/overview")
     public String showProjectsOverview(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            redirectAttributes.addFlashAttribute("error", "You need to log in to access this page");
-            return "redirect:/login";
+        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+        if (userHasAccess != null) {
+            return userHasAccess;
         }
-        model.addAttribute("projects", projectService.getProjectsByUserId(loggedInUser.getUserId()));
+
+        User userSession = (User) session.getAttribute("userSession");
+        model.addAttribute("projects", projectService.getProjectsByUserId(userSession.getUserId()));
         return "userOverview";
     }
 
     @GetMapping("/project/create")
     public String showAddForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            redirectAttributes.addFlashAttribute("error", "You need to log in to access this page");
-            return "redirect:/login";
+        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+        if (userHasAccess != null) {
+            return userHasAccess;
         }
+
         model.addAttribute("project", new Project());
         return "createProject";
     }
 
     @PostMapping("/project/create")
     public String createProject(@ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            redirectAttributes.addFlashAttribute("error", "You need to log in to create a project");
-            return "redirect:/login";
+        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+        if (userHasAccess != null) {
+            return userHasAccess;
         }
 
         // Create project and associate it with the logged-in user. Keyholder helps it connect to the person making it.
-        projectService.createProject(project, loggedInUser.getUserId());
+        User userSession = (User) session.getAttribute("userSession");
+        projectService.createProject(project, userSession.getUserId());
 
         redirectAttributes.addFlashAttribute("error", "Project added successfully");
         return "redirect:/overview";
@@ -65,17 +72,10 @@ public class ProjectController {
 
     @GetMapping("/project/{projectId}")
     public String showProjectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        // Check if there is a session
-        if (loggedInUser == null) {
-            redirectAttributes.addFlashAttribute("error", "You need to log in to access this page");
-            return "redirect:/login";
-        }
-        // If there is a session, check if user has access to the project
-        boolean hasAccess = projectService.doesUserHaveAccess(projectId, loggedInUser.getUserId());
-        if (!hasAccess) {
-            redirectAttributes.addFlashAttribute("error", "You do not have access to this project. Ask someone with access to share it with you.");
-            return "error/403";
+        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userHasAccess != null) {
+            return userHasAccess;
         }
 
         Project project = projectService.getProjectById(projectId);
@@ -85,5 +85,14 @@ public class ProjectController {
         return "projectOverview";
     }
 
+    @GetMapping("/project/{projectId}/subproject/{subprojectId}")
+    public String showSubprojectPage(@PathVariable int projectId, @PathVariable int subprojectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        // Using the component ValidateAccess to check if the user is allowed to access this endpoint
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userHasAccess != null) {
+            return userHasAccess;
+        }
 
+        return "projectOverview";
+    }
 }

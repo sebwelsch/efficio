@@ -35,4 +35,9 @@ public class UserRepository {
         }
     }
 
+    public boolean doesUserHaveAccess(int projectId, int userId) {
+        String query = "SELECT COUNT(*) FROM project_users WHERE project_id = ? AND user_id = ?";
+        Integer count = jdbcTemplate.queryForObject(query, Integer.class, projectId, userId);
+        return count != null && count > 0;
+    }
 }
