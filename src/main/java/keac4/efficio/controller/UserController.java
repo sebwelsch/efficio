@@ -54,7 +54,7 @@ public class UserController {
     public String verifyLogin(HttpSession session, @RequestParam String username, @RequestParam String password, Model model, RedirectAttributes redirectAttributes) {
         User user = userService.findByUsername(username);
         if (user != null && userService.authenticate(password, user.getPassword())) {
-            session.setAttribute("loggedInUser", user);
+            session.setAttribute("userSession", user);
             redirectAttributes.addFlashAttribute("success", "You have been logged in");
             return "redirect:/overview";
         }

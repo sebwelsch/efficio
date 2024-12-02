@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Add Project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Create subproject - Efficio</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<h1>Add a New Project</h1>
-<form th:action="@{/project/add}" th:object="${project}" method="post">
+
+<h1>Create a new subproject for projectName</h1>
+
+<form th:action="@{/project/{projectId}/subproject/create(projectId=${projectId})}" th:object="${subproject}" method="post">
     <label for="name">Name:</label>
     <input type="text" id="name" th:field="*{name}" required/>
     <br>
@@ -26,7 +31,8 @@
     <input type="number" id="expectedTime" th:field="*{expectedTime}"/>
     <br>
 
-    <button type="submit">Add Project</button>
+    <button type="submit">Create subproject</button>
 </form>
+
 </body>
 </html>

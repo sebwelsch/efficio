@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Project overview</title>
+    <title>Project overview - Efficio</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -21,18 +21,23 @@
         </div>
 
         <div class="project-details">
-            <h1 th:text="${project.name}">Project 1</h1>
+            <h1 th:if="${project}" th:text="${project.name}"></h1>
+            <h1 th:if="${subproject}" th:text="${subproject.name}"></h1>
             <div class="project-info">
-                <p th:text="${project.description}"> This will be the greatest project ever made. What we are gonna do is we are going to make a project thats about a project. How great is that?</p>
+                <p th:if="${project}" th:text="${project.description}"></p>
+                <p th:if="${subproject}" th:text="${subproject.description}"></p>
             </div>
         </div>
 
-        <div class="task-container">
+        <div class="task-container" th:if="${subproject}">
             <h1>Tasks</h1>
         </div>
 
-        <div class="list-container">
+        <div class="list-container" th:if="${project}"">
             <h1>Subprojects</h1>
+            <a th:href="@{/project/{projectId}/subproject/create(projectId=${project.projectId})}">
+                <button>Create subproject</button>
+            </a>
             <div th:each="subproject: ${subprojects}">
                 <p th:text="${subproject.name}"></p>
             </div>
@@ -40,5 +45,6 @@
     </div>
 
 </div>
+
 </body>
 </html>
