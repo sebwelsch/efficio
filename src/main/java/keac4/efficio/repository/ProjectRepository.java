@@ -71,9 +71,8 @@ public class ProjectRepository {
     }
 
     public List<Project> findByUserID(int userId) {
-        String query = "SELECT * FROM projects WHERE user_id = ?";
+        String query = "SELECT * FROM project_users WHERE user_id = ?";
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Project.class), userId);
     }
-    
 
 }
