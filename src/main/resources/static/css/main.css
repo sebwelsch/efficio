@@ -1,0 +1,82 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f0f0;
+    font-family: 'Montserrat', serif;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+}
+
+header h1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.logout-button button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button button:hover {
+    background-color: #870b0b;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    padding: 20px;
+}
+
+.side-nav {
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    height: 80vh;
+}
+
+.side-nav h2 {
+    font-size: 24px;
+}
+
+.project-details {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-info {
+    background-color: #b6b6b6;
+}
+
+.task-container {
+    margin-top: auto;
+    padding: 20px;
+}
+
+.list-container {
+    flex: 1;
+    padding: 20px;
+    margin-bottom: auto;
+}
