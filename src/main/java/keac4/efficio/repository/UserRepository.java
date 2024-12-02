@@ -25,7 +25,7 @@ public class UserRepository {
         try {
             return jdbcTemplate.queryForObject(query, new Object[]{username}, (rs, rowNum) ->
                     new User(
-                            rs.getInt("userId"),
+                            rs.getInt("user_id"),
                             rs.getString("username"),
                             rs.getString("password")
                     )

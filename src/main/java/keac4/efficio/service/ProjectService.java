@@ -18,8 +18,10 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public void addProject(Project newProject) {
-        projectRepository.addProject(newProject);
+    public void addProject(Project project, int userId) {
+        int projectId = projectRepository.addProject(project);
+        // Links the project to the user using the keyholder method.
+        projectRepository.linkProjectToUser(projectId, userId);
     }
 
     public List<Project> getAllProjects() {
@@ -36,6 +38,10 @@ public class ProjectService {
 
     public List<Subproject> getSubProjectsByProjectId(int projectId) {
         return projectRepository.getSubProjectsByProjectId(projectId);
+    }
+
+    public List<Project> getProjectsByUserId(int userId) {
+        return projectRepository.findByUserID(userId);
     }
 
 

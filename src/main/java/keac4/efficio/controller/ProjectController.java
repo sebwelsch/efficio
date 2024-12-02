@@ -21,41 +21,58 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-
     @Autowired
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
 
-    @GetMapping("/project/overview")
-    public String showProjectsOverview(Model model) {
-        model.addAttribute("projects", projectService.getAllProjects());
-        return "projects-overview";
+    @GetMapping("/overview")
+    public String showProjectsOverview(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            redirectAttributes.addFlashAttribute("message", "You need to log in to access this page");
+            return "redirect:/login";
+        }
+        model.addAttribute("projects", projectService.getProjectsByUserId(loggedInUser.getUserId()));
+        return "userOverview";
     }
 
     @GetMapping("/project/add")
-    public String showAddForm(Model model) {
+    public String showAddForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            redirectAttributes.addFlashAttribute("message", "You need to log in to access this page");
+            return "redirect:/login";
+        }
         model.addAttribute("project", new Project());
-        return "add-project";
+        return "addProject";
     }
-    @PostMapping("/project/add")
-    public String addProject(@ModelAttribute Project project, Model model) {
-        projectService.addProject(project);
-        model.addAttribute("message", "project added successfully");
-        return "redirect:/project/overview";
 
+    @PostMapping("/project/add")
+    public String addProject(@ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            redirectAttributes.addFlashAttribute("error", "You need to log in to add a project");
+            return "redirect:/login";
+        }
+
+        // Add project and associate it with the logged-in user. Keyholder helps it connect to the person making it.
+        projectService.addProject(project, loggedInUser.getUserId());
+
+        redirectAttributes.addFlashAttribute("message", "Project added successfully");
+        return "redirect:/overview";
     }
 
     @GetMapping("/project/{projectId}")
     public String showProjectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
         // Check if there is a session
-        if (sessionUser == null) {
+        if (loggedInUser == null) {
             redirectAttributes.addFlashAttribute("error", "You need to log in to access this page");
             return "redirect:/login";
         }
         // If there is a session, check if user has access to the project
-        boolean hasAccess = projectService.doesUserHaveAccess(projectId, sessionUser.getUserId());
+        boolean hasAccess = projectService.doesUserHaveAccess(projectId, loggedInUser.getUserId());
         if (!hasAccess) {
             redirectAttributes.addFlashAttribute("error", "You do not have access to this project. Ask someone with access to share it with you.");
             return "error/403";
