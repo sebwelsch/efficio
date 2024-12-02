@@ -21,10 +21,10 @@
         </div>
 
         <div class="project-details">
-            <h1 th:if="${project}" th:text="${project.name}"></h1>
+            <h1 th:if="${project}" th:text="${project.name}">Navn</h1>
             <h1 th:if="${subproject}" th:text="${subproject.name}"></h1>
             <div class="project-info">
-                <p th:if="${project}" th:text="${project.description}"></p>
+                <p th:if="${project}" th:text="${project.description}">Beskrivelse</p>
                 <p th:if="${subproject}" th:text="${subproject.description}"></p>
             </div>
         </div>
@@ -33,7 +33,7 @@
             <h1>Tasks</h1>
         </div>
 
-        <div class="list-container" th:if="${project}"">
+        <div class="list-container" th:if="${project}">
             <h1>Subprojects</h1>
             <a th:href="@{/project/{projectId}/subproject/create(projectId=${project.projectId})}">
                 <button>Create subproject</button>
