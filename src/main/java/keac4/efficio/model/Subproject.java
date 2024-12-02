@@ -1,5 +1,6 @@
 package keac4.efficio.model;
 
+
 public class Subproject {
     private int subprojectId;
     private int projectId;
