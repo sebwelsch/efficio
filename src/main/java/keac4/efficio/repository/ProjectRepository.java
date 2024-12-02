@@ -2,6 +2,7 @@ package keac4.efficio.repository;
 
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
+import keac4.efficio.model.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -65,7 +66,15 @@ public class ProjectRepository {
 
     public Project getProjectById(int projectId) {
         String query = "SELECT * FROM projects WHERE project_id = ?";
-        return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Project.class), projectId);
+        return jdbcTemplate.queryForObject(query, new Integer[]{projectId}, (rs, rowNum) ->
+                new Project(
+                        rs.getInt("project_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("start_date"),
+                        rs.getString("deadline"),
+                        rs.getInt("expected_time")
+                ));
     }
 
     public List<Project> findByUserID(int userId) {

@@ -13,11 +13,11 @@ public class Project {
 
     }
 
-    public Project(String startDate, int projectId, String name, String description, String deadline, int expectedTime) {
-        this.startDate = startDate;
+    public Project(int projectId, String name, String description, String startDate, String deadline, int expectedTime) {
         this.projectId = projectId;
         this.name = name;
         this.description = description;
+        this.startDate = startDate;
         this.deadline = deadline;
         this.expectedTime = expectedTime;
     }
