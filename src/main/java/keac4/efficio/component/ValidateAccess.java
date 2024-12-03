@@ -15,7 +15,13 @@ public class ValidateAccess {
         this.userService = userService;
     }
 
-    // validateUserAccess is used to validate if a user has access to a page
+    /**
+     * Used to validate if a user has access to an endpoint
+     * @param session to check if there is a HTTPSession
+     * @param redirectAttributes add flash attributes to a redirect
+     * @param projectId if provided, used to check if user has access to the project
+     * @return either login view, error view or null based on the users session
+     */
     public String validateUserAccess(HttpSession session, RedirectAttributes redirectAttributes, Integer projectId) {
         User userSession = (User) session.getAttribute("userSession");
 
