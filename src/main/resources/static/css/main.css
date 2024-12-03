@@ -59,24 +59,38 @@ header h1 {
     font-size: 24px;
 }
 
+.project-wrapper {
+    flex-direction: column;
+    text-align: center;
+    flex: 1;
+}
+
 .project-details {
+    background-color: #e0e0e0;
     flex: 1;
     padding: 20px;
     display: flex;
     flex-direction: column;
+    text-align: center;
+    margin: 20px;
 }
 
 .project-info {
-    background-color: #b6b6b6;
+    background-color: #cccccc;
+    text-align: left;
 }
 
-.task-container {
-    margin-top: auto;
-    padding: 20px;
+.bottom-container {
+    background-color: #e0e0e0;
+    margin: 20px;
 }
 
-.list-container {
+.right-container {
+    background-color: #e0e0e0;
     flex: 1;
     padding: 20px;
     margin-bottom: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
