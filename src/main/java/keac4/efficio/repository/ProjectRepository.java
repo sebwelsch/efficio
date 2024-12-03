@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -115,6 +116,12 @@ public class ProjectRepository {
                 + "INNER JOIN project_users pu ON p.project_id = pu.project_id "
                 + "WHERE pu.user_id = ?";
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Project.class), userId);
+    }
+
+    @Transactional
+    public void deleteById(int projectId) {
+        String query = "DELETE FROM projects WHERE project_id = ?";
+        jdbcTemplate.update(query, projectId);
     }
 
 }
