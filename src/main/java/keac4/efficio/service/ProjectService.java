@@ -1,9 +1,8 @@
 package keac4.efficio.service;
 
 import keac4.efficio.model.Project;
-import keac4.efficio.model.Task;
-import keac4.efficio.repository.ProjectRepository;
 import keac4.efficio.model.Subproject;
+import keac4.efficio.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

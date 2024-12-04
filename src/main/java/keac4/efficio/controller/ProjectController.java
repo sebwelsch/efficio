@@ -9,8 +9,6 @@ import keac4.efficio.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -43,8 +41,9 @@ public class ProjectController {
 
     /**
      * Show the view for creating a new project
-     * @param model used to add attributes for the view
-     * @param session to check if there is a HTTPSession
+     *
+     * @param model              used to add attributes for the view
+     * @param session            to check if there is a HTTPSession
      * @param redirectAttributes add flash attributes to a redirect
      * @return view to create a new project
      */
@@ -75,10 +74,9 @@ public class ProjectController {
     }
 
     /**
-     *
-     * @param projectId used to access a specific project and get its subprojects
-     * @param model used to add attributes for the view
-     * @param session to check if there is a HTTPSession
+     * @param projectId          used to access a specific project and get its subprojects
+     * @param model              used to add attributes for the view
+     * @param session            to check if there is a HTTPSession
      * @param redirectAttributes add flash attributes to a redirect
      * @return view for the projects overview
      */

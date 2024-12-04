@@ -118,18 +118,18 @@ header h1 {
 
 .project-link {
     text-decoration: none; /* Remove underline */
-    color: inherit;        /* Inherit the color */
-    display: block;         /* Make <a> a block-level element */
+    color: inherit; /* Inherit the color */
+    display: block; /* Make <a> a block-level element */
 }
 
 .project-box {
-    position: relative;    /* This is necessary for positioning the delete button inside */
+    position: relative; /* This is necessary for positioning the delete button inside */
     border: 1px solid #ddd;
     padding: 10px;
     margin-bottom: 10px;
     transition: background-color 0.3s ease;
-    display: block;         /* Ensures the box behaves like a block element */
-    cursor: pointer;       /* Change cursor to pointer when hovering over the box */
+    display: block; /* Ensures the box behaves like a block element */
+    cursor: pointer; /* Change cursor to pointer when hovering over the box */
 }
 
 .project-box:hover {
@@ -137,15 +137,15 @@ header h1 {
 }
 
 .delete-form {
-    position: absolute;     /* Position the delete form inside the box */
-    top: 10px;              /* Adjust the position from the top */
-    right: 10px;            /* Adjust the position from the right */
-    margin: 0;              /* Remove any margin */
+    position: absolute; /* Position the delete form inside the box */
+    top: 10px; /* Adjust the position from the top */
+    right: 10px; /* Adjust the position from the right */
+    margin: 0; /* Remove any margin */
 }
 
 .delete-button {
     background-color: #ff4d4d; /* Red background for the delete button */
-    color: white;              /* White text */
+    color: white; /* White text */
     border: none;
     padding: 5px 10px;
     cursor: pointer;

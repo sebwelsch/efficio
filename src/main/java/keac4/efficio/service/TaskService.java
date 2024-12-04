@@ -4,7 +4,6 @@ import keac4.efficio.model.Task;
 import keac4.efficio.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import keac4.efficio.repository.ProjectRepository;
 
 @Service
 public class TaskService {
