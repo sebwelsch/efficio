@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Project overview - Efficio</title>
-    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 <div class="container">
     <!--  Top navigation bar  -->
     <header>
         <h1>Efficio</h1>
-        <a th:href="@{/logout}" class="danger">
+        <a th:href="@{/logout}" class="logout-button">
             <button>Logout</button>
         </a>
     </header>
@@ -22,17 +22,13 @@
             <h2>Projects</h2>
         </div>
 
-        <div th:if="${error} or ${success}">
-            <p th:text="${error}" class="danger"></p>
-            <p th:text="${success}" class="success"></p>
-        </div>
-
         <div class="project-wrapper">
             <!-- The project details -->
             <div class="project-details">
-                <h1 th:if="${project}" th:text="${project.name}">Project name</h1>
+
+                <h1 th:if="${subproject}" th:text="${subproject.name}"></h1>
                 <div class="project-info">
-                    <p th:if="${project}" th:text="${project.description}">Description of the project</p>
+                    <p th:if="${subproject}" th:text="${subproject.description}"></p>
                 </div>
             </div>
 

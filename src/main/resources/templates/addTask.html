@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Task</title>
+</head>
+<body>
+<h1>Add Task</h1>
+<form th:action="@{/project/{projectId}/subproject/{subprojectId}/tasks/add(projectId=${projectId}, subprojectId=${subprojectId})}" method="post">
+  <input type="hidden" name="projectId" th:value="${projectId}" />
+
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required />
+  </div>
+  <div>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+  </div>
+  <div>
+    <label for="expectedTime">Expected Time (hours):</label>
+    <input type="number" id="expectedTime" name="expectedTime" required />
+  </div>
+
+  <button type="submit">Add Task</button>
+</form>
+</body>
+</html>
