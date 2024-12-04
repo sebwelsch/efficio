@@ -85,9 +85,9 @@ public class ProjectController {
     @GetMapping("/project/{projectId}")
     public String showProjectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
-        if (userAccess != null) {
-            return userAccess;
-        }
+//        if (userAccess != null) {
+//            return userAccess;
+//        }
 
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
