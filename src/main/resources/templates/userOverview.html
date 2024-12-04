@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>Your projects - Efficio</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link href="/css/main.css" rel="stylesheet">
     <!-- JavaScript for confirmation -->
     <script>
         function confirmDeletion(event) {
@@ -19,8 +19,8 @@
 <h1>Your Projects Overview</h1>
 
 <div th:if="${error} or ${success}">
-    <p th:text="${error}" class="danger"></p>
-    <p th:text="${success}" class="success"></p>
+    <p class="danger" th:text="${error}"></p>
+    <p class="success" th:text="${success}"></p>
 </div>
 
 <!-- If user has no projects -->
@@ -30,15 +30,16 @@
 
 <!-- Projects overview container -->
 <div class="projects-container">
-    <div th:each="project : ${projects}" class="project-box">
+    <div class="project-box" th:each="project : ${projects}">
         <div class="project-box">
-            <a th:href="@{/project/{projectId}(projectId=${project.projectId})}" class="project-link">
+            <a class="project-link" th:href="@{/project/{projectId}(projectId=${project.projectId})}">
                 <h3 th:text="${project.name}"></h3>
                 <p><strong>Description:</strong> <span th:text="${project.description}"></span></p>
                 <p><strong>Start Date:</strong> <span th:text="${project.startDate}"></span></p>
                 <p><strong>Deadline:</strong> <span th:text="${project.deadline}"></span></p>
             </a>
-            <form th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}" method="post" onsubmit="confirmDeletion(event)" class="danger">
+            <form class="danger" method="post"
+                  onsubmit="confirmDeletion(event)" th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}">
                 <button type="submit">Delete</button>
             </form>
         </div>

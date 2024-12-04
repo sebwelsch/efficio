@@ -1,50 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>Sign up - Efficio</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
 
     <div class="form-container">
-    <form th:action="@{/signup}" th:object="${newUser}" method="post">
-        <h2>Create account</h2>
+        <form method="post" th:action="@{/signup}" th:object="${newUser}">
+            <h2>Create account</h2>
+
+            <div>
+                <label for="username">Username</label>
+                <input id="username" name="username" required type="text">
+            </div>
+
+            <div>
+                <label for="userPassword">Password</label>
+                <input id="userPassword" name="password" required type="password">
+            </div>
+
+            <div>
+                <label for="userConfirmPassword">Bekræft Password</label>
+                <input id="userConfirmPassword" name="confirmPassword" required type="password">
+            </div>
+
+            <div th:if="${error} or ${success}">
+                <p class="danger" th:text="${error}"></p>
+                <p class="success" th:text="${success}"></p>
+            </div>
+
+            <button type="submit">Sign up</button>
+        </form>
+
 
         <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+            <p>Already have an account?</p>
+            <a href="/login">
+                <button>Log in</button>
+            </a>
         </div>
-
-        <div>
-            <label for="userPassword">Password</label>
-            <input type="password" id="userPassword" name="password" required>
-        </div>
-
-        <div>
-            <label for="userConfirmPassword">Bekræft Password</label>
-            <input type="password" id="userConfirmPassword" name="confirmPassword" required>
-        </div>
-
-        <div th:if="${error} or ${success}">
-            <p th:text="${error}" class="danger"></p>
-            <p th:text="${success}" class="success"></p>
-        </div>
-
-        <button type="submit">Sign up</button>
-    </form>
-
-
-    <div>
-        <p>Already have an account?</p>
-        <a href="/login">
-            <button>Log in</button>
-        </a>
     </div>
-        </div>
 
 </div>
 

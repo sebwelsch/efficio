@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>Project overview - Efficio</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <!--  Top navigation bar  -->
     <header>
         <h1>Efficio</h1>
-        <a th:href="@{/logout}" class="logout-button">
+        <a class="logout-button" th:href="@{/logout}">
             <button>Logout</button>
         </a>
     </header>
@@ -39,7 +39,8 @@
         </div>
 
         <div class="right-container" th:if="${project}">
-            <a th:if="${subproject}" th:href="@{/project/{projectId}/subproject/{subProjectId}/tasks/add(projectId=${project.projectId}, subProjectId=${subproject.subprojectId})}">
+            <a th:href="@{/project/{projectId}/subproject/{subProjectId}/tasks/add(projectId=${project.projectId}, subProjectId=${subproject.subprojectId})}"
+               th:if="${subproject}">
                 <button class="btn btn-primary">Add Task</button>
             </a>
             <h1>Subprojects</h1>

@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>Log in - Efficio</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
 
     <div class="form-container">
-    <form th:action="@{/login}" method="post">
-        <h2>Log in</h2>
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-        </div>
+        <form method="post" th:action="@{/login}">
+            <h2>Log in</h2>
+            <div>
+                <label for="username">Username</label>
+                <input id="username" name="username" required type="text">
+            </div>
 
-        <div>
-            <label for="userPassword">Password</label>
-            <input type="password" id="userPassword" name="password" required>
-        </div>
+            <div>
+                <label for="userPassword">Password</label>
+                <input id="userPassword" name="password" required type="password">
+            </div>
 
-        <div th:if="${error} or ${success}">
-            <p th:text="${error}" class="danger"></p>
-            <p th:text="${success}" class="success"></p>
-        </div>
+            <div th:if="${error} or ${success}">
+                <p class="danger" th:text="${error}"></p>
+                <p class="success" th:text="${success}"></p>
+            </div>
 
-        <button type="submit">Log in</button>
-    </form>
+            <button type="submit">Log in</button>
+        </form>
 
         <p>Don't have an account?</p>
         <a href="/signup">

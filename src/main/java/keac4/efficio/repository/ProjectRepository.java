@@ -51,7 +51,7 @@ public class ProjectRepository {
                 subproject.getStartDate(),
                 subproject.getDeadline(),
                 subproject.getExpectedTime()
-                );
+        );
     }
 
     // Link the project to the user by adding an entry in the project_users table
@@ -110,7 +110,7 @@ public class ProjectRepository {
     //p* select all from projects. p stands for projects
     //Inner join combines the two tables p and pu (project_users)
     //The join has the condition of p.project_id = pu.project_id. It needs to match
-    //WHERE ensures that only the actual user can do it. 
+    //WHERE ensures that only the actual user can do it.
     public List<Project> findByUserID(int userId) {
         String query = "SELECT p.* FROM projects p "
                 + "INNER JOIN project_users pu ON p.project_id = pu.project_id "
