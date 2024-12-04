@@ -26,10 +26,8 @@
             <!-- The project details -->
             <div class="project-details">
                 <h1 th:if="${project}" th:text="${project.name}">Project name</h1>
-                <h1 th:if="${subproject}" th:text="${subproject.name}"></h1>
                 <div class="project-info">
                     <p th:if="${project}" th:text="${project.description}">Description of the project</p>
-                    <p th:if="${subproject}" th:text="${subproject.description}"></p>
                 </div>
             </div>
 
