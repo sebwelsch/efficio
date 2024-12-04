@@ -129,6 +129,8 @@ public class ProjectController {
 
         Subproject subproject = projectService.getSubprojectById(subprojectId);
         model.addAttribute("subproject", subproject);
+        Project project = projectService.getProjectById(projectId);
+        model.addAttribute("project", project);
         return "projectOverview";
     }
 }

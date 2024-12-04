@@ -22,6 +22,9 @@ public class Project {
         this.expectedTime = expectedTime;
     }
 
+    public static void setProjectID(int projectId) {
+    }
+
     public int getProjectId() {
         return projectId;
     }
