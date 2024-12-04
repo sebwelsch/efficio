@@ -133,4 +133,16 @@ public class ProjectController {
         model.addAttribute("project", project);
         return "projectOverview";
     }
+
+    @PostMapping("/project/delete/{projectId}")
+    public String deleteProject(@PathVariable int projectId, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userHasAccess != null) {
+            return userHasAccess;
+        }
+
+        projectService.deleteProject(projectId);
+        redirectAttributes.addFlashAttribute("success", "Project deleted successfully");
+        return "redirect:/userOverview";
+    }
 }
