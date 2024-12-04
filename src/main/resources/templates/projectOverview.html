@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Project overview - Efficio</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
 <div class="container">
     <!--  Top navigation bar  -->
     <header>
         <h1>Efficio</h1>
-        <a th:href="@{/logout}" class="logout-button">
+        <a th:href="@{/logout}" class="danger">
             <button>Logout</button>
         </a>
     </header>
@@ -20,6 +20,11 @@
         <!-- Side-navigation bar for projects -->
         <div class="side-nav">
             <h2>Projects</h2>
+        </div>
+
+        <div th:if="${error} or ${success}">
+            <p th:text="${error}" class="danger"></p>
+            <p th:text="${success}" class="success"></p>
         </div>
 
         <div class="project-wrapper">

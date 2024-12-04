@@ -28,7 +28,28 @@ header h1 {
     font-weight: bold;
 }
 
-.logout-button button {
+.success {
+    color: #59ff3f;
+}
+
+.success button {
+    background-color: #6bc15b;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.success button:hover {
+    background-color: #4a853f;
+}
+
+.danger {
+    color: #ff0000;
+}
+
+.danger button {
     background-color: #ff0000;
     color: #fff;
     border: none;
@@ -37,7 +58,7 @@ header h1 {
     transition: background-color 0.3s ease;
 }
 
-.logout-button button:hover {
+.danger button:hover {
     background-color: #870b0b;
 }
 
@@ -93,4 +114,43 @@ header h1 {
     display: flex;
     flex-direction: column;
     text-align: center;
+}
+
+.project-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit;        /* Inherit the color */
+    display: block;         /* Make <a> a block-level element */
+}
+
+.project-box {
+    position: relative;    /* This is necessary for positioning the delete button inside */
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+    display: block;         /* Ensures the box behaves like a block element */
+    cursor: pointer;       /* Change cursor to pointer when hovering over the box */
+}
+
+.project-box:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+}
+
+.delete-form {
+    position: absolute;     /* Position the delete form inside the box */
+    top: 10px;              /* Adjust the position from the top */
+    right: 10px;            /* Adjust the position from the right */
+    margin: 0;              /* Remove any margin */
+}
+
+.delete-button {
+    background-color: #ff4d4d; /* Red background for the delete button */
+    color: white;              /* White text */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #e60000; /* Darker red on hover */
 }
