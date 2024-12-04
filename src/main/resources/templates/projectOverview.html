@@ -8,40 +8,41 @@
 </head>
 <body>
 <div class="container">
+    <!--  Top navigation bar  -->
     <header>
         <h1>Efficio</h1>
-        <a href="/logout" class="logout-button">
+        <a th:href="@{/logout}" class="logout-button">
             <button>Logout</button>
         </a>
     </header>
 
     <div class="main-content">
+        <!-- Side-navigation bar for projects -->
         <div class="side-nav">
             <h2>Projects</h2>
         </div>
 
-        <div class="project-details">
-            <h1 th:if="${project}" th:text="${project.name}">Navn</h1>
-            <h1 th:if="${subproject}" th:text="${subproject.name}"></h1>
-            <div class="project-info">
-                <p th:if="${project}" th:text="${project.description}">Beskrivelse</p>
-                <p th:if="${subproject}" th:text="${subproject.description}"></p>
+        <div class="project-wrapper">
+            <!-- The project details -->
+            <div class="project-details">
+                <h1 th:if="${project}" th:text="${project.name}">Project name</h1>
+                <h1 th:if="${subproject}" th:text="${subproject.name}"></h1>
+                <div class="project-info">
+                    <p th:if="${project}" th:text="${project.description}">Description of the project</p>
+                    <p th:if="${subproject}" th:text="${subproject.description}"></p>
+                </div>
+            </div>
+
+            <!-- Time estimation for each workday -->
+            <div class="bottom-container">
+                <h1>Time usage per day</h1>
             </div>
         </div>
 
-        <div class="task-container" th:if="${subproject}">
-            <h1>Tasks</h1>
-        </div>
-
-        <div class="form-container">
+        <div class="right-container" th:if="${project}">
             <a th:if="${subproject}" th:href="@{/project/{projectId}/subproject/{subProjectId}/tasks/add(projectId=${project.projectId}, subProjectId=${subproject.subprojectId})}">
                 <button class="btn btn-primary">Add Task</button>
             </a>
-        </div>
-
-
-
-        <div class="list-container" th:if="${project}">
             <h1>Subprojects</h1>
             <a th:href="@{/project/{projectId}/subproject/create(projectId=${project.projectId})}">
                 <button>Create subproject</button>
@@ -53,6 +54,5 @@
     </div>
 
 </div>
-
 </body>
 </html>
