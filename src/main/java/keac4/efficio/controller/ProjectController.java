@@ -85,9 +85,9 @@ public class ProjectController {
     @GetMapping("/project/{projectId}")
     public String showProjectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
-//        if (userAccess != null) {
-//            return userAccess;
-//        }
+        if (userAccess != null) {
+            return userAccess;
+        }
 
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
@@ -109,7 +109,7 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{projectId}/subproject/create")
-    public String createSubproject(@ModelAttribute Subproject subproject, @PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String createSubproject(@ModelAttribute Subproject subproject, @PathVariable int projectId, HttpSession session, RedirectAttributes redirectAttributes) {
         String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
@@ -133,7 +133,7 @@ public class ProjectController {
     }
 
     @PostMapping("/project/delete/{projectId}")
-    public String deleteProject(@PathVariable int projectId, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
+    public String deleteProject(@PathVariable int projectId, RedirectAttributes redirectAttributes, HttpSession session) {
         String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
         if (userHasAccess != null) {
             return userHasAccess;
@@ -141,6 +141,6 @@ public class ProjectController {
 
         projectService.deleteProject(projectId);
         redirectAttributes.addFlashAttribute("success", "Project deleted successfully");
-        return "redirect:/userOverview";
+        return "redirect:/overview";
     }
 }

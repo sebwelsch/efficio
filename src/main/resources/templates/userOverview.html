@@ -5,47 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Your projects - Efficio</title>
     <link rel="stylesheet" href="/css/main.css">
-    <style>
-        .project-link {
-            text-decoration: none; /* Remove underline */
-            color: inherit;        /* Inherit the color */
-            display: block;         /* Make <a> a block-level element */
-        }
-
-        .project-box {
-            position: relative;    /* This is necessary for positioning the delete button inside */
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-            transition: background-color 0.3s ease;
-            display: block;         /* Ensures the box behaves like a block element */
-            cursor: pointer;       /* Change cursor to pointer when hovering over the box */
-        }
-
-        .project-box:hover {
-            background-color: #f0f0f0; /* Change background color on hover */
-        }
-
-        .delete-form {
-            position: absolute;     /* Position the delete form inside the box */
-            top: 10px;              /* Adjust the position from the top */
-            right: 10px;            /* Adjust the position from the right */
-            margin: 0;              /* Remove any margin */
-        }
-
-        .delete-button {
-            background-color: #ff4d4d; /* Red background for the delete button */
-            color: white;              /* White text */
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
-        .delete-button:hover {
-            background-color: #e60000; /* Darker red on hover */
-        }
-    </style>
-
     <!-- JavaScript for confirmation -->
     <script>
         function confirmDeletion(event) {
@@ -59,8 +18,9 @@
 <body>
 <h1>Your Projects Overview</h1>
 
-<div th:if="${message}" class="message">
-    <p th:text="${message}"></p>
+<div th:if="${error} or ${success}">
+    <p th:text="${error}" class="danger"></p>
+    <p th:text="${success}" class="success"></p>
 </div>
 
 <!-- If user has no projects -->
@@ -78,8 +38,8 @@
                 <p><strong>Start Date:</strong> <span th:text="${project.startDate}"></span></p>
                 <p><strong>Deadline:</strong> <span th:text="${project.deadline}"></span></p>
             </a>
-            <form th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}" method="post" onsubmit="confirmDeletion(event)" class="delete-form">
-                <button type="submit" class="delete-button">Delete</button>
+            <form th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}" method="post" onsubmit="confirmDeletion(event)" class="danger">
+                <button type="submit">Delete</button>
             </form>
         </div>
     </div>
