@@ -63,7 +63,7 @@ public class TaskController {
         return redirectLink;
     }
 
-    @PostMapping("/{projectId}/subprojects/{subprojectId}/tasks/{taskId}")
+    @PostMapping("/{projectId}/subprojects/{subprojectId}/tasks/{taskId}/delete")
     public String deleteTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, RedirectAttributes redirectAttributes, HttpSession session) {
         String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
         if (userHasAccess != null) {
