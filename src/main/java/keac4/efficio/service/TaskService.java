@@ -34,9 +34,19 @@ public class TaskService {
         projectRepository.updateExpectedTimeProject(project.getProjectId(), newExpectedTimeProject);
     }
 
+    public Task getTaskById(int taskId) {
+        return taskRepository.findTaskById(taskId);
+    }
+
+    public void updateTask(Task task) {
+        taskRepository.updateTask(task);
+    }
+
 
     public boolean doesUserHaveAccess(int projectId, int userId) {
         return false;
     }
+
+
 
 }
