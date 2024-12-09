@@ -19,4 +19,9 @@ public class TaskRepository {
         jdbcTemplate.update(query, newTask.getSubprojectId(), newTask.getName(), newTask.getDescription(), newTask.getExpectedTime());
     }
 
+    public int deleteTaskBySubprojectId(int taskId, int subprojectId) {
+        String query = "DELETE FROM tasks WHERE task_id = ? AND subproject_id = ?";
+        return jdbcTemplate.update(query, taskId, subprojectId);
+    }
+
 }
