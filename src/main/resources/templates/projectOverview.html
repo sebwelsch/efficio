@@ -27,6 +27,10 @@
             <p class="success" th:text="${success}"></p>
         </div>
 
+        <a th:href="@{/project/{projectId}/update(projectId=${project.projectId})}">
+            <button >Update project</button>
+        </a>
+
         <div class="project-wrapper">
             <!-- The project details -->
             <div class="project-details">

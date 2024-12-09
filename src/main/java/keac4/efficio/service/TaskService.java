@@ -20,7 +20,6 @@ public class TaskService {
         this.projectRepository = projectRepository;
     }
 
-
     public void saveNewTask(Task task) {
         task.setSubprojectId(task.getSubprojectId());
         taskRepository.saveNewTask(task);
@@ -34,9 +33,16 @@ public class TaskService {
         projectRepository.updateExpectedTimeProject(project.getProjectId(), newExpectedTimeProject);
     }
 
-
     public boolean doesUserHaveAccess(int projectId, int userId) {
         return false;
     }
 
+    public String deleteTask(int taskId, int subprojectId) {
+        int rowsAffected = taskRepository.deleteTaskBySubprojectId(taskId, subprojectId);
+        if (rowsAffected > 0) {
+            return "Task deleted successfully.";
+        } else {
+            return "Task not found for the given subproject.";
+        }
+    }
 }

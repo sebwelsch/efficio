@@ -45,6 +45,14 @@ public class ProjectService {
         return projectRepository.getSubprojectById(subprojectId);
     }
 
+    public void updateProject(Project project) {
+        projectRepository.updateProject(project);
+    }
+
+    public void updateSubproject(Subproject subproject) {
+        projectRepository.updateSubproject(subproject);
+    }
+
     public List<Subproject> getAllSubprojectsByProjectId(int projectId) {
         return projectRepository.getAllSubprojectsByProjectId(projectId);
     }
@@ -56,6 +64,5 @@ public class ProjectService {
     public void deleteProject(int projectId) {
         projectRepository.deleteById(projectId);
     }
-
 
 }

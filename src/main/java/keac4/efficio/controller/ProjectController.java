@@ -105,6 +105,42 @@ public class ProjectController {
         return "redirect:/project/" + projectId;
     }
 
+    @GetMapping("/project/{projectId}/update")
+    public String showUpdateProjectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userAccess != null) {
+            return userAccess;
+        }
+
+        Project project = projectService.getProjectById(projectId);
+        model.addAttribute("project", project);
+        return "updateProject";
+    }
+
+    @PostMapping("/project/{projectId}/update")
+    public String updateProject(@PathVariable int projectId, @ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
+        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userAccess != null) {
+            return userAccess;
+        }
+
+        projectService.updateProject(project);
+        redirectAttributes.addFlashAttribute("success", "Successfully updated project");
+        return "redirect:/project/" + projectId;
+    }
+
+    @PostMapping("/project/delete/{projectId}")
+    public String deleteProject(@PathVariable int projectId, RedirectAttributes redirectAttributes, HttpSession session) {
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userHasAccess != null) {
+            return userHasAccess;
+        }
+
+        projectService.deleteProject(projectId);
+        redirectAttributes.addFlashAttribute("success", "Project deleted successfully");
+        return "redirect:/overview";
+    }
+
     @GetMapping("/project/{projectId}/subproject/create")
     public String showCreateSubprojectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
@@ -143,15 +179,28 @@ public class ProjectController {
         return "projectOverview";
     }
 
-    @PostMapping("/project/delete/{projectId}")
-    public String deleteProject(@PathVariable int projectId, RedirectAttributes redirectAttributes, HttpSession session) {
-        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
-        if (userHasAccess != null) {
-            return userHasAccess;
+    @GetMapping("/project/{projectId}/subproject/{subprojectId}/update")
+    public String showUpdateSubprojectPage(@PathVariable int projectId, @PathVariable int subprojectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userAccess != null) {
+            return userAccess;
         }
 
-        projectService.deleteProject(projectId);
-        redirectAttributes.addFlashAttribute("success", "Project deleted successfully");
-        return "redirect:/overview";
+        Subproject subproject = projectService.getSubprojectById(subprojectId);
+        model.addAttribute("subproject", subproject);
+        return "updateSubproject";
+    }
+
+    @PostMapping("/project/{projectId}/subproject/{subprojectId}/update")
+    public String updateSubproject(@PathVariable int projectId, @PathVariable int subprojectId, @ModelAttribute Subproject subproject, HttpSession session, RedirectAttributes redirectAttributes) {
+        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userAccess != null) {
+            return userAccess;
+        }
+
+        projectService.updateSubproject(subproject);
+        redirectAttributes.addFlashAttribute("success", "Successfully updated project");
+        String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
+        return redirectLink;
     }
 }
