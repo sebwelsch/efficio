@@ -1,0 +1,59 @@
+/*
+-
+Header styling
+-
+*/
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #333;
+    color: #fff;
+    padding: 15px 30px;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Logo/name */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo-link h1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+/* Navigation Links */
+.nav-links ul {
+    display: flex;
+    gap: 20px;
+    list-style-type: none;
+}
+
+.nav-links ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-links ul li a:hover {
+    color: #00bcd4;
+}
+
+.user-buttons a {
+    margin-left: 10px;
+}

@@ -1,0 +1,31 @@
+<div th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a class="logo-link" th:href="@{/}">
+                    <h1>Efficio</h1>
+                </a>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <!-- If there is a user session this will be shown -->
+                    <li th:if="${session.userSession != null}"><a th:href="@{/overview}">Overview</a></li>
+                </ul>
+            </div>
+            <div class="user-buttons">
+                <!-- If there is a session logout will be shown -->
+                <form class="danger" method="post" style="display: inline" th:action="@{/logout}"
+                      th:if="${session.userSession != null}">
+                    <button type="submit">Logout</button>
+                </form>
+                <!-- If there is no session login and sign up buttons are shown -->
+                <a class="login" th:href="@{/login}" th:if="${session.userSession == null}">
+                    <button>Login</button>
+                </a>
+                <a class="signup" th:href="@{/signup}" th:if="${session.userSession == null}">
+                    <button>Sign Up</button>
+                </a>
+            </div>
+        </nav>
+    </header>
+</div>
