@@ -124,4 +124,14 @@ public class ProjectRepository {
         jdbcTemplate.update(query, projectId);
     }
 
+    public void updateExpectedTimeSubproject(int subprojectId, int newExpectedTime) {
+        String query = "UPDATE subprojects SET expected_time = ? WHERE subproject_id = ?";
+        jdbcTemplate.update(query, newExpectedTime, subprojectId);
+    }
+
+    public void updateExpectedTimeProject(int projectId, int newExpectedTime) {
+        String query = "UPDATE projects SET expected_time = ? WHERE project_id = ?";
+        jdbcTemplate.update(query, newExpectedTime, projectId);
+    }
+
 }
