@@ -94,6 +94,17 @@ public class ProjectController {
         return "projectOverview";
     }
 
+    @PostMapping("/project/{projectId}/share")
+    public String shareProject(@PathVariable int projectId, @RequestParam String username, HttpSession session, RedirectAttributes redirectAttributes) {
+        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userAccess != null) {
+            return userAccess;
+        }
+
+        projectService.shareProject(projectId, username);
+        return "redirect:/project/" + projectId;
+    }
+
     @GetMapping("/project/{projectId}/update")
     public String showUpdateProjectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);

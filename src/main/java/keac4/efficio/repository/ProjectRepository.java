@@ -2,6 +2,7 @@ package keac4.efficio.repository;
 
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
+import keac4.efficio.model.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -54,15 +55,10 @@ public class ProjectRepository {
         );
     }
 
-    // Link the project to the user by adding an entry in the project_users table
+    // Link the project to a user by adding an entry in the project_users table
     public void linkProjectToUser(int projectId, int userId) {
         String query = "INSERT INTO project_users (project_id, user_id) VALUES (?, ?)";
         jdbcTemplate.update(query, projectId, userId);
-    }
-
-    public List<Project> findAll() {
-        String query = "SELECT * FROM projects";
-        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Project.class));
     }
 
     public List<Subproject> getAllSubprojectsByProjectId(int projectId) {
