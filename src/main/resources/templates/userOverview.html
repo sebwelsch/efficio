@@ -39,7 +39,8 @@
                 <p><strong>Deadline:</strong> <span th:text="${project.deadline}"></span></p>
             </a>
             <form class="danger" method="post"
-                  onsubmit="confirmDeletion(event)" th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}">
+                  onsubmit="confirmDeletion(event)"
+                  th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}">
                 <button type="submit">Delete</button>
             </form>
         </div>
