@@ -22,6 +22,10 @@
             <h2>Projects</h2>
         </div>
 
+        <a th:href="@{/project/{projectId}/subproject/{subprojectId}/update(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+            <button >Update subproject</button>
+        </a>
+
         <div class="project-wrapper">
             <!-- The project details -->
             <div class="project-details">

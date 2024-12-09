@@ -106,6 +106,16 @@ public class ProjectRepository {
                 ));
     }
 
+    public void updateProject(Project project) {
+        String query = "UPDATE projects SET name = ?, description = ?, start_date = ?, deadline = ? WHERE project_id = ?";
+        jdbcTemplate.update(query, project.getName(), project.getDescription(), project.getStartDate(), project.getDeadline(), project.getProjectId());
+    }
+
+    public void updateSubproject(Subproject subproject) {
+        String query = "UPDATE subprojects SET name = ?, description = ?, start_date = ?, deadline = ? WHERE subproject_id = ?";
+        jdbcTemplate.update(query, subproject.getName(), subproject.getDescription(), subproject.getStartDate(), subproject.getDeadline(), subproject.getSubprojectId());
+    }
+
     //Find by userId for the overview-html.
     //p* select all from projects. p stands for projects
     //Inner join combines the two tables p and pu (project_users)
@@ -133,5 +143,4 @@ public class ProjectRepository {
         String query = "UPDATE projects SET expected_time = ? WHERE project_id = ?";
         jdbcTemplate.update(query, newExpectedTime, projectId);
     }
-
 }
