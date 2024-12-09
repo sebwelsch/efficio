@@ -62,4 +62,19 @@ public class TaskController {
         String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
         return redirectLink;
     }
+
+    @PostMapping("/{projectId}/subprojects/{subprojectId}/tasks/{taskId}")
+    public String deleteTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, RedirectAttributes redirectAttributes, HttpSession session) {
+        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        if (userHasAccess != null) {
+            return userHasAccess;
+        }
+        String result = taskService.deleteTask(taskId, subprojectId);
+        if (result.equals("Task deleted successfully.")) {
+            redirectAttributes.addFlashAttribute("success", result);
+        } else {
+            redirectAttributes.addFlashAttribute("error", result);
+        }
+        return "redirect:/subProjectOverview/";
+    }
 }
