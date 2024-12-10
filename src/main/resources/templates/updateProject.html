@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <title>Update project - Efficio</title>
+    <title>Edit project - Efficio</title>
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <!--  Top navigation bar  -->
     <div th:insert="~{fragments/header :: header}"></div>
 
-    <h1 th:text="'Update project ' + ${project.name}"></h1>
+    <h1 th:text="'Edit project ' + ${project.name}"></h1>
     <form method="post" th:action="@{/project/{projectId}/update(projectId=${project.projectId})}"
           th:object="${project}">
         <div>
@@ -33,7 +33,9 @@
             <label for="deadline">Deadline:</label>
             <input id="deadline" th:field="*{deadline}" th:value="${project.deadline}" type="date"/>
         </div>
-        <button type="submit">Update project</button>
+        <div class="success">
+            <button type="submit">Update project</button>
+        </div>
     </form>
 </div>
 </body>

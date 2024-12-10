@@ -3,8 +3,11 @@ package keac4.efficio.component;
 import jakarta.servlet.http.HttpSession;
 import keac4.efficio.model.User;
 import keac4.efficio.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Objects;
 
 @Component
 public class ValidateAccess {
@@ -15,6 +18,9 @@ public class ValidateAccess {
         this.userService = userService;
     }
 
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
+
     /**
      * Used to validate if a user has access to an endpoint
      *
@@ -24,6 +30,11 @@ public class ValidateAccess {
      * @return either login view, error view or null based on the users session
      */
     public String validateUserAccess(HttpSession session, RedirectAttributes redirectAttributes, Integer projectId) {
+        // If the active spring profile is "dev" then bypass authentication
+        if (Objects.equals(activeProfile, "dev")) {
+            return null;
+        }
+
         User userSession = (User) session.getAttribute("userSession");
 
         // Check if there is a HTTPSession

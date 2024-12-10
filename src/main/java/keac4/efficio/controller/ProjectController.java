@@ -89,8 +89,14 @@ public class ProjectController {
 
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
+
+        User userSession = (User) session.getAttribute("userSession");
+        model.addAttribute("projects", projectService.getProjectsByUserId(userSession.getUserId()));
+
         List<Subproject> subprojects = projectService.getAllSubprojectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
+
+        model.addAttribute("hoursPerDay", 8);
         return "projectOverview";
     }
 
@@ -176,7 +182,7 @@ public class ProjectController {
         model.addAttribute("subproject", subproject);
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
-        return "projectOverview";
+        return "subProjectOverview";
     }
 
     @GetMapping("/project/{projectId}/subproject/{subprojectId}/update")

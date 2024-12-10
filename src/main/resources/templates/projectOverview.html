@@ -20,42 +20,87 @@
             <p class="success" th:text="${success}"></p>
         </div>
 
-        <a th:href="@{/project/{projectId}/update(projectId=${project.projectId})}">
-            <button>Update project</button>
-        </a>
-
         <div class="project-wrapper">
-            <!-- The project details -->
-            <div class="project-details">
-                <h1 th:if="${project}" th:text="${project.name}">Project name</h1>
-                <div class="project-info">
-                    <p th:if="${project}" th:text="${project.description}">Description of the project</p>
+            <div class="layout-container">
+                <!-- The project details -->
+                <div class="project-details">
+                    <h1 th:text="${project.name}">Project name</h1>
+                    <div class="project-info">
+                        <div>
+                            <p th:text="${project.description}">Description of the project</p>
+                        </div>
+                        <div>
+                            <div class="project-icons">
+                                <img th:src="@{/images/clock.svg}" class="icon">
+                                <p th:text="${project.expectedTime} + ' hours'"></p>
+                            </div>
+                            <div class="project-icons" style="background-color: #6bc15b;">
+                                <img th:src="@{/images/start-date.svg}" class="icon">
+                                <p th:text="${project.startDate}"></p>
+                            </div>
+                            <div class="project-icons" style="background-color: #ff5b5b;">
+                                <img th:src="@{/images/deadline.svg}" class="icon">
+                                <p th:text="${project.deadline}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="success" th:href="@{/project/{projectId}/update(projectId=${project.projectId})}">
+                        <button>Edit project</button>
+                    </a>
                 </div>
-            </div>
-            <form method="post" th:action="@{/project/{projectId}/share(projectId=${project.projectId})}">
-                <label for="username">Share project with another user</label>
-                <input id="username" placeholder="Username" th:name="username" type="text">
+                <form method="post" th:action="@{/project/{projectId}/share(projectId=${project.projectId})}">
+                    <label for="username">Share project with another user</label>
+                    <input id="username" placeholder="Username" th:name="username" type="text">
 
-                <button type="submit">Share project</button>
-            </form>
+                    <button type="submit">Share project</button>
+                </form>
+            </div>
 
             <!-- Time estimation for each workday -->
             <div class="bottom-container">
                 <h1>Time usage per day</h1>
+                <p>This table represents how many hours of work has to be done each weekday to finish this project by the deadline.</p>
+                <div class="time-usage-chart">
+                    <div class="weekday">
+                        <div class="column" th:style="'height: ' + ${hoursPerDay * 20} + 'px;'" th:text="${hoursPerDay + ' hr'}"></div>
+                        <p>Mon</p>
+                    </div>
+                    <div class="weekday">
+                        <div class="column" th:style="'height: ' + ${hoursPerDay * 20} + 'px;'" th:text="${hoursPerDay + ' hr'}"></div>
+                        <p>Tue</p>
+                    </div>
+                    <div class="weekday">
+                        <div class="column" th:style="'height: ' + ${hoursPerDay * 20} + 'px;'" th:text="${hoursPerDay + ' hr'}"></div>
+                        <p>Wed</p>
+                    </div>
+                    <div class="weekday">
+                        <div class="column" th:style="'height: ' + ${hoursPerDay * 20} + 'px;'" th:text="${hoursPerDay + ' hr'}"></div>
+                        <p>Thu</p>
+                    </div>
+                    <div class="weekday">
+                        <div class="column" th:style="'height: ' + ${hoursPerDay * 20} + 'px;'" th:text="${hoursPerDay + ' hr'}"></div>
+                        <p>Fri</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="right-container" th:if="${project}">
-            <a th:href="@{/project/{projectId}/subproject/{subProjectId}/tasks/add(projectId=${project.projectId}, subProjectId=${subproject.subprojectId})}"
-               th:if="${subproject}">
-                <button class="btn btn-primary">Add Task</button>
-            </a>
+        <div class="layout-container">
             <h1>Subprojects</h1>
-            <a th:href="@{/project/{projectId}/subproject/create(projectId=${project.projectId})}">
-                <button>Create subproject</button>
-            </a>
-            <div th:each="subproject: ${subprojects}">
-                <p th:text="${subproject.name}"></p>
+            <div class="subprojects-icon">
+                <img th:src="@{/images/clock.svg}" class="icon">
+            </div>
+            <div th:each="subproject: ${subprojects}" class="subproject-box">
+                <a th:href="@{/project/{projectId}/subproject/{subprojectId}(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+                    <p th:text="${subproject.name}"></p>
+                    <p class="expected-time" th:text="${subproject.expectedTime}"></p>
+                </a>
+            </div>
+
+            <div>
+                <a class="success" th:href="@{/project/{projectId}/subproject/create(projectId=${project.projectId})}">
+                    <button>Create subproject</button>
+                </a>
             </div>
         </div>
     </div>
