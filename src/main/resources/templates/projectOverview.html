@@ -27,6 +27,10 @@
             <p class="success" th:text="${success}"></p>
         </div>
 
+        <a th:href="@{/project/{projectId}/update(projectId=${project.projectId})}">
+            <button >Update project</button>
+        </a>
+
         <div class="project-wrapper">
             <!-- The project details -->
             <div class="project-details">
@@ -35,6 +39,12 @@
                     <p th:if="${project}" th:text="${project.description}">Description of the project</p>
                 </div>
             </div>
+            <form th:action="@{/project/{projectId}/share(projectId=${project.projectId})}" method="post">
+                <label for="username">Share project with another user</label>
+                <input type="text" id="username" th:name="username" placeholder="Username">
+
+                <button type="submit">Share project</button>
+            </form>
 
             <!-- Time estimation for each workday -->
             <div class="bottom-container">

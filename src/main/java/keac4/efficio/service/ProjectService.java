@@ -2,7 +2,9 @@ package keac4.efficio.service;
 
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
+import keac4.efficio.model.User;
 import keac4.efficio.repository.ProjectRepository;
+import keac4.efficio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,12 @@ import java.util.List;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository) {
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
     public void createProject(Project project, int userId) {
@@ -24,12 +28,13 @@ public class ProjectService {
         projectRepository.linkProjectToUser(projectId, userId);
     }
 
-    public void createSubproject(Subproject subproject, int projectId) {
-        projectRepository.createSubproject(subproject, projectId);
+    public void shareProject(int projectId, String username) {
+        User user = userRepository.findByUsername(username);
+        projectRepository.linkProjectToUser(projectId, user.getUserId());
     }
 
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+    public void createSubproject(Subproject subproject, int projectId) {
+        projectRepository.createSubproject(subproject, projectId);
     }
 
     public Project getProjectById(int projectId) {
@@ -38,6 +43,14 @@ public class ProjectService {
 
     public Subproject getSubprojectById(int subprojectId) {
         return projectRepository.getSubprojectById(subprojectId);
+    }
+
+    public void updateProject(Project project) {
+        projectRepository.updateProject(project);
+    }
+
+    public void updateSubproject(Subproject subproject) {
+        projectRepository.updateSubproject(subproject);
     }
 
     public List<Subproject> getAllSubprojectsByProjectId(int projectId) {
@@ -51,6 +64,5 @@ public class ProjectService {
     public void deleteProject(int projectId) {
         projectRepository.deleteById(projectId);
     }
-
 
 }

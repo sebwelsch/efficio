@@ -2,6 +2,7 @@ package keac4.efficio.repository;
 
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
+import keac4.efficio.model.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -54,15 +55,10 @@ public class ProjectRepository {
         );
     }
 
-    // Link the project to the user by adding an entry in the project_users table
+    // Link the project to a user by adding an entry in the project_users table
     public void linkProjectToUser(int projectId, int userId) {
         String query = "INSERT INTO project_users (project_id, user_id) VALUES (?, ?)";
         jdbcTemplate.update(query, projectId, userId);
-    }
-
-    public List<Project> findAll() {
-        String query = "SELECT * FROM projects";
-        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Project.class));
     }
 
     public List<Subproject> getAllSubprojectsByProjectId(int projectId) {
@@ -106,6 +102,16 @@ public class ProjectRepository {
                 ));
     }
 
+    public void updateProject(Project project) {
+        String query = "UPDATE projects SET name = ?, description = ?, start_date = ?, deadline = ? WHERE project_id = ?";
+        jdbcTemplate.update(query, project.getName(), project.getDescription(), project.getStartDate(), project.getDeadline(), project.getProjectId());
+    }
+
+    public void updateSubproject(Subproject subproject) {
+        String query = "UPDATE subprojects SET name = ?, description = ?, start_date = ?, deadline = ? WHERE subproject_id = ?";
+        jdbcTemplate.update(query, subproject.getName(), subproject.getDescription(), subproject.getStartDate(), subproject.getDeadline(), subproject.getSubprojectId());
+    }
+
     //Find by userId for the overview-html.
     //p* select all from projects. p stands for projects
     //Inner join combines the two tables p and pu (project_users)
@@ -133,5 +139,4 @@ public class ProjectRepository {
         String query = "UPDATE projects SET expected_time = ? WHERE project_id = ?";
         jdbcTemplate.update(query, newExpectedTime, projectId);
     }
-
 }
