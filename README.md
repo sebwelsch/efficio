@@ -1,5 +1,7 @@
 # Efficio - Project calculation tool
 
+### Simplify your project management with Efficio.
+
 Efficio is a tool that gives you an easy overview of all your projects and helps with your time management.
 
 Access it here: https://efficioc4.azurewebsites.net/

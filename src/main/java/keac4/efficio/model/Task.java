@@ -7,9 +7,6 @@ public class Task {
     private int expectedTime;
     private int subprojectId;
 
-    public Task() {
-
-    }
 
     public Task(int taskId, String name, String description, int expectedTime, int subprojectId) {
         this.taskId = taskId;
@@ -17,6 +14,10 @@ public class Task {
         this.description = description;
         this.expectedTime = expectedTime;
         this.subprojectId = subprojectId;
+    }
+
+    public Task() {
+
     }
 
     public int getTaskId() {

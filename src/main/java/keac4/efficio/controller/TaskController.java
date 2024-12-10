@@ -58,9 +58,39 @@ public class TaskController {
         task.setSubprojectId(subprojectId);
         taskService.saveNewTask(task);
 
-        redirectAttributes.addFlashAttribute("message", "Task added successfully!");
+        redirectAttributes.addFlashAttribute("success", "Task added successfully!");
         String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
         return redirectLink;
+    }
+
+    @GetMapping("/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/edit")
+    public String showEditTaskForm(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model, RedirectAttributes redirectAttributes) {
+        Task existingTask = taskService.getTaskById(taskId);
+
+        if(existingTask == null) {
+            redirectAttributes.addFlashAttribute("error", "Task not found");
+            String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
+            return redirectLink;
+
+        }
+
+        model.addAttribute("task", existingTask);
+        model.addAttribute("taskId", taskId);
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("subprojectId", subprojectId);
+
+        return "editTask";
+    }
+
+    @PostMapping("/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/edit")
+    public String updateTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, @ModelAttribute Task task, RedirectAttributes redirectAttributes) {
+       task.setTaskId(taskId);
+       taskService.updateTask(task);
+
+       redirectAttributes.addFlashAttribute("success", "Task updated successfully!");
+       String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
+       return redirectLink;
+
     }
 
     @PostMapping("/{projectId}/subprojects/{subprojectId}/tasks/{taskId}/delete")
