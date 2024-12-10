@@ -58,7 +58,7 @@ public class TaskController {
         task.setSubprojectId(subprojectId);
         taskService.saveNewTask(task);
 
-        redirectAttributes.addFlashAttribute("message", "Task added successfully!");
+        redirectAttributes.addFlashAttribute("success", "Task added successfully!");
         String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
         return redirectLink;
     }
@@ -68,8 +68,9 @@ public class TaskController {
         Task existingTask = taskService.getTaskById(taskId);
 
         if(existingTask == null) {
-            redirectAttributes.addFlashAttribute("message", "Task not found");
-            return "redirect:/project/" + projectId + "/subproject/" + subprojectId;
+            redirectAttributes.addFlashAttribute("error", "Task not found");
+            String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
+            return redirectLink;
 
         }
 
@@ -86,8 +87,9 @@ public class TaskController {
        task.setTaskId(taskId);
        taskService.updateTask(task);
 
-       redirectAttributes.addFlashAttribute("message", "Task updated successfully!");
-       return "redirect:/project/" + projectId + "/subproject/" + subprojectId;
+       redirectAttributes.addFlashAttribute("success", "Task updated successfully!");
+       String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
+       return redirectLink;
 
     }
 
