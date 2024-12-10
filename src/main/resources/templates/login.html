@@ -7,8 +7,9 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
-
 <div class="container">
+    <!--  Top navigation bar  -->
+    <div th:insert="~{fragments/header :: header}"></div>
 
     <div class="form-container">
         <form method="post" th:action="@{/login}">
@@ -38,6 +39,5 @@
     </div>
 
 </div>
-
 </body>
 </html>

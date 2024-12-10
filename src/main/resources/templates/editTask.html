@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Task</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Edit Task</title>
 </head>
 <body>
 <h1>Edit Task</h1>
-<form th:action="@{/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/edit(projectId=${projectId}, subprojectId=${subprojectId}, taskId=${taskId})}" method="post">
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" th:value="${task.name}" required />
-  </div>
-  <div>
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" required>[[${task.description}]]</textarea>
-  </div>
-  <div>
-    <label for="expectedTime">Expected Time (hours):</label>
-    <input type="number" id="expectedTime" name="expectedTime" th:value="${task.expectedTime}" required />
-  </div>
-  <button type="submit">Update Task</button>
+<form method="post"
+      th:action="@{/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/edit(projectId=${projectId}, subprojectId=${subprojectId}, taskId=${taskId})}">
+    <div>
+        <label for="name">Name:</label>
+        <input id="name" name="name" required th:value="${task.name}" type="text"/>
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required>[[${task.description}]]</textarea>
+    </div>
+    <div>
+        <label for="expectedTime">Expected Time (hours):</label>
+        <input id="expectedTime" name="expectedTime" required th:value="${task.expectedTime}" type="number"/>
+    </div>
+    <button type="submit">Update Task</button>
 </form>
 </body>
 </html>

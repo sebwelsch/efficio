@@ -67,7 +67,7 @@ public class TaskController {
     public String showEditTaskForm(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model, RedirectAttributes redirectAttributes) {
         Task existingTask = taskService.getTaskById(taskId);
 
-        if(existingTask == null) {
+        if (existingTask == null) {
             redirectAttributes.addFlashAttribute("error", "Task not found");
             String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
             return redirectLink;
@@ -84,12 +84,12 @@ public class TaskController {
 
     @PostMapping("/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/edit")
     public String updateTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, @ModelAttribute Task task, RedirectAttributes redirectAttributes) {
-       task.setTaskId(taskId);
-       taskService.updateTask(task);
+        task.setTaskId(taskId);
+        taskService.updateTask(task);
 
-       redirectAttributes.addFlashAttribute("success", "Task updated successfully!");
-       String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
-       return redirectLink;
+        redirectAttributes.addFlashAttribute("success", "Task updated successfully!");
+        String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
+        return redirectLink;
 
     }
 
