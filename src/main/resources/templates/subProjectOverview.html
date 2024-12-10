@@ -9,12 +9,7 @@
 <body>
 <div class="container">
     <!--  Top navigation bar  -->
-    <header>
-        <h1>Efficio</h1>
-        <a class="logout-button" th:href="@{/logout}">
-            <button>Logout</button>
-        </a>
-    </header>
+    <div th:insert="~{fragments/header :: header}"></div>
 
     <div class="main-content">
         <!-- Side-navigation bar for projects -->

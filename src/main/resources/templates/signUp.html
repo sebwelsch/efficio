@@ -9,6 +9,8 @@
 <body>
 
 <div class="container">
+    <!--  Top navigation bar  -->
+    <div th:insert="~{fragments/header :: header}"></div>
 
     <div class="form-container">
         <form method="post" th:action="@{/signup}" th:object="${newUser}">
