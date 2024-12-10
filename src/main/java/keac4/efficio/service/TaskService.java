@@ -20,6 +20,7 @@ public class TaskService {
         this.projectRepository = projectRepository;
     }
 
+
     public void saveNewTask(Task task) {
         task.setSubprojectId(task.getSubprojectId());
         taskRepository.saveNewTask(task);
@@ -32,6 +33,15 @@ public class TaskService {
         int newExpectedTimeProject = project.getExpectedTime() + task.getExpectedTime();
         projectRepository.updateExpectedTimeProject(project.getProjectId(), newExpectedTimeProject);
     }
+
+    public Task getTaskById(int taskId) {
+        return taskRepository.findTaskById(taskId);
+    }
+
+    public void updateTask(Task task) {
+        taskRepository.updateTask(task);
+    }
+
 
     public boolean doesUserHaveAccess(int projectId, int userId) {
         return false;

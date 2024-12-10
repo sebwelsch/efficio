@@ -9,18 +9,11 @@
 <body>
 <div class="container">
     <!--  Top navigation bar  -->
-    <header>
-        <h1>Efficio</h1>
-        <a class="danger" th:href="@{/logout}">
-            <button>Logout</button>
-        </a>
-    </header>
+    <div th:insert="~{fragments/header :: header}"></div>
 
     <div class="main-content">
         <!-- Side-navigation bar for projects -->
-        <div class="side-nav">
-            <h2>Projects</h2>
-        </div>
+        <div th:insert="~{fragments/sidenav :: sidenav}"></div>
 
         <div th:if="${error} or ${success}">
             <p class="danger" th:text="${error}"></p>
@@ -28,7 +21,7 @@
         </div>
 
         <a th:href="@{/project/{projectId}/update(projectId=${project.projectId})}">
-            <button >Update project</button>
+            <button>Update project</button>
         </a>
 
         <div class="project-wrapper">
@@ -39,9 +32,9 @@
                     <p th:if="${project}" th:text="${project.description}">Description of the project</p>
                 </div>
             </div>
-            <form th:action="@{/project/{projectId}/share(projectId=${project.projectId})}" method="post">
+            <form method="post" th:action="@{/project/{projectId}/share(projectId=${project.projectId})}">
                 <label for="username">Share project with another user</label>
-                <input type="text" id="username" th:name="username" placeholder="Username">
+                <input id="username" placeholder="Username" th:name="username" type="text">
 
                 <button type="submit">Share project</button>
             </form>

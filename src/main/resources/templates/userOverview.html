@@ -16,33 +16,38 @@
     </script>
 </head>
 <body>
-<h1>Your Projects Overview</h1>
+<div class="container">
+    <!--  Top navigation bar  -->
+    <div th:insert="~{fragments/header :: header}"></div>
 
-<div th:if="${error} or ${success}">
-    <p class="danger" th:text="${error}"></p>
-    <p class="success" th:text="${success}"></p>
-</div>
+    <h1>Your Projects Overview</h1>
 
-<!-- If user has no projects -->
-<div th:if="${#lists.isEmpty(projects)}">
-    <p>You don't have any projects yet.</p>
-</div>
+    <div th:if="${error} or ${success}">
+        <p class="danger" th:text="${error}"></p>
+        <p class="success" th:text="${success}"></p>
+    </div>
 
-<!-- Projects overview container -->
-<div class="projects-container">
-    <div class="project-box" th:each="project : ${projects}">
-        <div class="project-box">
-            <a class="project-link" th:href="@{/project/{projectId}(projectId=${project.projectId})}">
-                <h3 th:text="${project.name}"></h3>
-                <p><strong>Description:</strong> <span th:text="${project.description}"></span></p>
-                <p><strong>Start Date:</strong> <span th:text="${project.startDate}"></span></p>
-                <p><strong>Deadline:</strong> <span th:text="${project.deadline}"></span></p>
-            </a>
-            <form class="danger" method="post"
-                  onsubmit="confirmDeletion(event)"
-                  th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}">
-                <button type="submit">Delete</button>
-            </form>
+    <!-- If user has no projects -->
+    <div th:if="${#lists.isEmpty(projects)}">
+        <p>You don't have any projects yet.</p>
+    </div>
+
+    <!-- Projects overview container -->
+    <div class="projects-container">
+        <div class="project-box" th:each="project : ${projects}">
+            <div class="project-box">
+                <a class="project-link" th:href="@{/project/{projectId}(projectId=${project.projectId})}">
+                    <h3 th:text="${project.name}"></h3>
+                    <p><strong>Description:</strong> <span th:text="${project.description}"></span></p>
+                    <p><strong>Start Date:</strong> <span th:text="${project.startDate}"></span></p>
+                    <p><strong>Deadline:</strong> <span th:text="${project.deadline}"></span></p>
+                </a>
+                <form class="danger" method="post"
+                      onsubmit="confirmDeletion(event)"
+                      th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

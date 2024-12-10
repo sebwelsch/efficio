@@ -6,25 +6,30 @@
     <title>Add Task</title>
 </head>
 <body>
-<h1>Add Task</h1>
-<form method="post"
-      th:action="@{/project/{projectId}/subproject/{subprojectId}/tasks/add(projectId=${projectId}, subprojectId=${subprojectId})}">
-    <input name="projectId" th:value="${projectId}" type="hidden"/>
+<div class="container">
+    <!--  Top navigation bar  -->
+    <div th:insert="~{fragments/header :: header}"></div>
 
-    <div>
-        <label for="name">Name:</label>
-        <input id="name" name="name" required type="text"/>
-    </div>
-    <div>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea>
-    </div>
-    <div>
-        <label for="expectedTime">Expected Time (hours):</label>
-        <input id="expectedTime" name="expectedTime" required type="number"/>
-    </div>
+    <h1>Add Task</h1>
+    <form method="post"
+          th:action="@{/project/{projectId}/subproject/{subprojectId}/tasks/add(projectId=${projectId}, subprojectId=${subprojectId})}">
+        <input name="projectId" th:value="${projectId}" type="hidden"/>
 
-    <button type="submit">Add Task</button>
-</form>
+        <div>
+            <label for="name">Name:</label>
+            <input id="name" name="name" required type="text"/>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <div>
+            <label for="expectedTime">Expected Time (hours):</label>
+            <input id="expectedTime" name="expectedTime" required type="number"/>
+        </div>
+
+        <button type="submit">Add Task</button>
+    </form>
+</div>
 </body>
 </html>

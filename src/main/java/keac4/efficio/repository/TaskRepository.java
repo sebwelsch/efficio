@@ -4,6 +4,8 @@ import keac4.efficio.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class TaskRepository {
 
@@ -17,6 +19,24 @@ public class TaskRepository {
         String query = "INSERT INTO tasks (subproject_id, name, description, expected_time) VALUES (?, ?, ?, ?)";
         System.out.println("Executing query: " + query);
         jdbcTemplate.update(query, newTask.getSubprojectId(), newTask.getName(), newTask.getDescription(), newTask.getExpectedTime());
+    }
+
+    public Task findTaskById(int taskId) {
+        String query = "SELECT * FROM tasks WHERE task_id = ?";
+        List<Task> tasks = jdbcTemplate.query(query, new Object[]{taskId}, (rs, rowNum) ->
+                new Task(
+                        rs.getInt("task_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getInt("expected_time"),
+                        rs.getInt("subproject_id")
+                ));
+        return tasks.isEmpty() ? null : tasks.get(0);
+    }
+
+    public void updateTask(Task task) {
+        String query = "UPDATE tasks SET name = ?, description = ?, expected_time = ? WHERE task_id = ?";
+        jdbcTemplate.update(query, task.getName(), task.getDescription(), task.getExpectedTime(), task.getTaskId());
     }
 
     public int deleteTaskBySubprojectId(int taskId, int subprojectId) {

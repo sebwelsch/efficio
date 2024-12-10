@@ -7,31 +7,34 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
+<div class="container">
+    <!--  Top navigation bar  -->
+    <div th:insert="~{fragments/header :: header}"></div>
 
-<h1 th:text="'Update project ' + ${project.name}"></h1>
+    <h1 th:text="'Update project ' + ${project.name}"></h1>
+    <form method="post" th:action="@{/project/{projectId}/update(projectId=${project.projectId})}"
+          th:object="${project}">
+        <div>
+            <label for="name">Name:</label>
+            <input id="name" required th:field="*{name}" th:value="${project.name}" type="text"/>
+        </div>
 
-<form method="post" th:action="@{/project/{projectId}/update(projectId=${project.projectId})}" th:object="${project}">
-    <div>
-        <label for="name">Name:</label>
-        <input id="name" required th:field="*{name}" th:value="${project.name}" type="text"/>
-    </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" th:field="*{description}" th:value="${project.description}"></textarea>
+        </div>
 
-    <div>
-        <label for="description">Description:</label>
-        <textarea id="description" th:field="*{description}" th:value="${project.description}"></textarea>
-    </div>
+        <div>
+            <label for="startDate">Start Date:</label>
+            <input id="startDate" th:field="*{startDate}" th:value="${project.startDate}" type="date"/>
+        </div>
 
-    <div>
-        <label for="startDate">Start Date:</label>
-        <input id="startDate" th:field="*{startDate}" th:value="${project.startDate}" type="date"/>
-    </div>
-
-    <div>
-        <label for="deadline">Deadline:</label>
-        <input id="deadline" th:field="*{deadline}" th:value="${project.deadline}" type="date"/>
-    </div>
-    <button type="submit">Update project</button>
-</form>
-
+        <div>
+            <label for="deadline">Deadline:</label>
+            <input id="deadline" th:field="*{deadline}" th:value="${project.deadline}" type="date"/>
+        </div>
+        <button type="submit">Update project</button>
+    </form>
+</div>
 </body>
 </html>

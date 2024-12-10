@@ -2,7 +2,6 @@ package keac4.efficio.repository;
 
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
-import keac4.efficio.model.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
