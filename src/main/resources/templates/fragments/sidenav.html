@@ -1,5 +1,10 @@
 <div th:fragment="sidenav" xmlns:th="http://www.thymeleaf.org">
     <div class="side-nav">
-        <h2>Projects</h2>
+        <h2>Your projects</h2>
+        <div th:each="project: ${projects}" class="side-nav-project-box">
+            <a th:href="@{/project/{projectId}(projectId=${project.projectId})}">
+                <p th:text="${project.name}"></p>
+            </a>
+        </div>
     </div>
 </div>
