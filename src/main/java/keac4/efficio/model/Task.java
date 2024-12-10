@@ -7,9 +7,6 @@ public class Task {
     private int expectedTime;
     private int subprojectId;
 
-    public Task(int taskId, int subprojectId, String name, String description, int expectedTime) {
-
-    }
 
     public Task(int taskId, String name, String description, int expectedTime, int subprojectId) {
         this.taskId = taskId;

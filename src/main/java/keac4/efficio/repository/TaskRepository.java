@@ -27,10 +27,10 @@ public class TaskRepository {
         List<Task> tasks = jdbcTemplate.query(query, new Object[]{taskId}, (rs, rowNum) ->
                 new Task(
                         rs.getInt("task_id"),
-                        rs.getInt("subproject_id"),
                         rs.getString("name"),
                         rs.getString("description"),
-                        rs.getInt("expected_time")
+                        rs.getInt("expected_time"),
+                        rs.getInt("subproject_id")
                 ));
         return tasks.isEmpty() ? null : tasks.get(0);
     }
