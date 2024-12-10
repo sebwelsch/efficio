@@ -1,7 +1,6 @@
 package keac4.efficio.repository;
 
 import keac4.efficio.model.Task;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -39,6 +38,7 @@ public class TaskRepository {
         String query = "UPDATE tasks SET name = ?, description = ?, expected_time = ? WHERE task_id = ?";
         jdbcTemplate.update(query, task.getName(), task.getDescription(), task.getExpectedTime(), task.getTaskId());
     }
+
     public int deleteTaskBySubprojectId(int taskId, int subprojectId) {
         String query = "DELETE FROM tasks WHERE task_id = ? AND subproject_id = ?";
         return jdbcTemplate.update(query, taskId, subprojectId);
