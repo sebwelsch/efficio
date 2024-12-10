@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <title>Update subproject - Efficio</title>
+    <title>Edit subproject - Efficio</title>
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <!--  Top navigation bar  -->
     <div th:insert="~{fragments/header :: header}"></div>
 
-    <h1 th:text="'Update subproject ' + ${subproject.name}"></h1>
+    <h1 th:text="'Edit subproject ' + ${subproject.name}"></h1>
     <form method="post"
           th:action="@{/project/{projectId}/subproject/{subprojectId}/update(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}"
           th:object="${subproject}">
