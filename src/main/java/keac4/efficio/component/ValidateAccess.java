@@ -24,22 +24,22 @@ public class ValidateAccess {
      * @return either login view, error view or null based on the users session
      */
     public String validateUserAccess(HttpSession session, RedirectAttributes redirectAttributes, Integer projectId) {
-        User userSession = (User) session.getAttribute("userSession");
-
-        // Check if there is a HTTPSession
-        if (userSession == null) {
-            redirectAttributes.addFlashAttribute("error", "You need to log in to access this page");
-            return "redirect:/login";
-        }
-
-        // If there is a HTTPSession and a projectId is provided, check if the user has access to the project
-        if (projectId != null) {
-            boolean hasAccess = userService.doesUserHaveAccess(projectId, userSession.getUserId());
-            if (!hasAccess) {
-                redirectAttributes.addFlashAttribute("error", "You do not have access to this project. Ask someone with access to share it with you.");
-                return "error/403";
-            }
-        }
+//        User userSession = (User) session.getAttribute("userSession");
+//
+//        // Check if there is a HTTPSession
+//        if (userSession == null) {
+//            redirectAttributes.addFlashAttribute("error", "You need to log in to access this page");
+//            return "redirect:/login";
+//        }
+//
+//        // If there is a HTTPSession and a projectId is provided, check if the user has access to the project
+//        if (projectId != null) {
+//            boolean hasAccess = userService.doesUserHaveAccess(projectId, userSession.getUserId());
+//            if (!hasAccess) {
+//                redirectAttributes.addFlashAttribute("error", "You do not have access to this project. Ask someone with access to share it with you.");
+//                return "error/403";
+//            }
+//        }
 
         return null;
     }

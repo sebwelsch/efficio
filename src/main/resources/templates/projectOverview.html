@@ -20,17 +20,16 @@
             <p class="success" th:text="${success}"></p>
         </div>
 
-        <a th:href="@{/project/{projectId}/update(projectId=${project.projectId})}">
-            <button>Update project</button>
-        </a>
-
         <div class="project-wrapper">
             <!-- The project details -->
             <div class="project-details">
-                <h1 th:if="${project}" th:text="${project.name}">Project name</h1>
+                <h1 th:text="${project.name}">Project name</h1>
                 <div class="project-info">
-                    <p th:if="${project}" th:text="${project.description}">Description of the project</p>
+                    <p th:text="${project.description}">Description of the project</p>
                 </div>
+                <a class="success" th:href="@{/project/{projectId}/update(projectId=${project.projectId})}">
+                    <button>Edit project</button>
+                </a>
             </div>
             <form method="post" th:action="@{/project/{projectId}/share(projectId=${project.projectId})}">
                 <label for="username">Share project with another user</label>
@@ -45,17 +44,20 @@
             </div>
         </div>
 
-        <div class="right-container" th:if="${project}">
-            <a th:href="@{/project/{projectId}/subproject/{subProjectId}/tasks/add(projectId=${project.projectId}, subProjectId=${subproject.subprojectId})}"
-               th:if="${subproject}">
-                <button class="btn btn-primary">Add Task</button>
-            </a>
+        <div class="right-container">
             <h1>Subprojects</h1>
-            <a th:href="@{/project/{projectId}/subproject/create(projectId=${project.projectId})}">
-                <button>Create subproject</button>
-            </a>
-            <div th:each="subproject: ${subprojects}">
-                <p th:text="${subproject.name}"></p>
+            <img th:src="@{/images/clock.svg}" class="icon">
+            <div th:each="subproject: ${subprojects}" class="subproject-box">
+                <a th:href="@{/project/{projectId}/subproject/{subprojectId}(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+                    <p th:text="${subproject.name}"></p>
+                    <p class="expected-time" th:text="${subproject.expectedTime}"></p>
+                </a>
+            </div>
+
+            <div style="margin: 15px;">
+                <a class="success" th:href="@{/project/{projectId}/subproject/create(projectId=${project.projectId})}">
+                    <button>Create subproject</button>
+                </a>
             </div>
         </div>
     </div>

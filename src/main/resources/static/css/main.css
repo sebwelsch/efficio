@@ -20,7 +20,7 @@ body {
 }
 
 .success button {
-    background-color: #6bc15b;
+    background-color: #468538;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -29,7 +29,7 @@ body {
 }
 
 .success button:hover {
-    background-color: #4a853f;
+    background-color: #6bc15b;
 }
 
 .danger {
@@ -68,7 +68,8 @@ body {
 }
 
 button {
-    background-color: #ffffff;
+    background-color: #477bae;
+    color: #ffffff;
     padding: 8px 16px;
     font-size: 1rem;
     border: none;
@@ -78,7 +79,7 @@ button {
 }
 
 button:hover {
-    background-color: #4a4a4a;
+    background-color: #67adff;
 }
 
 .project-wrapper {
@@ -107,14 +108,60 @@ button:hover {
     margin: 20px;
 }
 
+.icon {
+    width: 35px;
+    height: 35px;
+}
+
 .right-container {
     background-color: #e0e0e0;
     flex: 1;
     padding: 20px;
-    margin-bottom: auto;
+    margin: 20px 20px auto;
     display: flex;
     flex-direction: column;
     text-align: center;
+}
+
+.right-container img {
+    display: block;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.subproject-box {
+    background-color: #477bae;
+    padding: 10px;
+    border: 1px solid #9c9c9c;
+    border-radius: 6px;
+    cursor: pointer;
+    display: block;
+    transition: background-color 0.3s ease;
+    margin: 5px 20px 5px 20px;
+}
+
+.subproject-box:hover {
+    background-color: #67adff;
+}
+
+.subproject-box a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subproject-box p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.expected-time {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 5px;
 }
 
 .project-link {
@@ -207,7 +254,7 @@ header {
 }
 
 .nav-links ul li a:hover {
-    color: #7a7a7a;
+    color: #67adff;
 }
 
 .user-buttons a {

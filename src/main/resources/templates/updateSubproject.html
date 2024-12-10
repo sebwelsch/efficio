@@ -34,7 +34,9 @@
             <label for="deadline">Deadline:</label>
             <input id="deadline" th:field="*{deadline}" th:value="${subproject.deadline}" type="date"/>
         </div>
-        <button type="submit">Update subproject</button>
+        <div class="success">
+            <button type="submit">Update subproject</button>
+        </div>
     </form>
 </div>
 </body>
