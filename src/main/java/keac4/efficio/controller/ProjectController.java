@@ -87,7 +87,10 @@ public class ProjectController {
             return userAccess;
         }
 
+
         Project project = projectService.getProjectById(projectId);
+        double hoursPerDay = projectService.calculateHoursPerDay(project);
+        project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
 
         User userSession = (User) session.getAttribute("userSession");
@@ -96,7 +99,8 @@ public class ProjectController {
         List<Subproject> subprojects = projectService.getAllSubprojectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
 
-        model.addAttribute("hoursPerDay", 8);
+        model.addAttribute("hoursPerDay", Math.ceil(hoursPerDay));
+
         return "projectOverview";
     }
 

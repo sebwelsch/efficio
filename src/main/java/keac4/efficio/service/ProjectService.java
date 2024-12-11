@@ -7,6 +7,8 @@ import keac4.efficio.repository.ProjectRepository;
 import keac4.efficio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import java.util.List;
 
@@ -35,6 +37,23 @@ public class ProjectService {
 
     public void createSubproject(Subproject subproject, int projectId) {
         projectRepository.createSubproject(subproject, projectId);
+    }
+
+    public double calculateHoursPerDay(Project project) {
+        LocalDate startDate = LocalDate.parse(project.getStartDate());
+        LocalDate deadLine = LocalDate.parse(project.getDeadline());
+
+        int workdays = 0;
+        while(!startDate.isAfter(deadLine)) {
+            if(startDate.getDayOfWeek() != DayOfWeek.SATURDAY && startDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                workdays++;
+            }
+            startDate = startDate.plusDays(1);
+        }
+        if(workdays == 0) return 0;
+        return (double) project.getExpectedTime() / workdays;
+
+
     }
 
     public Project getProjectById(int projectId) {
