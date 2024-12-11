@@ -29,7 +29,7 @@ public class ProjectController {
 
     @GetMapping("/overview")
     public String showUserOverview(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, null);
         if (userAccess != null) {
             return userAccess;
         }
@@ -49,7 +49,7 @@ public class ProjectController {
      */
     @GetMapping("/project/create")
     public String showCreateProjectPage(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, null);
         if (userAccess != null) {
             return userAccess;
         }
@@ -59,8 +59,8 @@ public class ProjectController {
     }
 
     @PostMapping("/project/create")
-    public String createProject(@ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+    public String createProject(@ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, null);
         if (userAccess != null) {
             return userAccess;
         }
@@ -82,7 +82,7 @@ public class ProjectController {
      */
     @GetMapping("/project/{projectId}")
     public String showProjectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -101,8 +101,8 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{projectId}/share")
-    public String shareProject(@PathVariable int projectId, @RequestParam String username, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+    public String shareProject(@PathVariable int projectId, @RequestParam String username, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -113,7 +113,7 @@ public class ProjectController {
 
     @GetMapping("/project/{projectId}/update")
     public String showUpdateProjectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -124,8 +124,8 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{projectId}/update")
-    public String updateProject(@PathVariable int projectId, @ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+    public String updateProject(@PathVariable int projectId, @ModelAttribute Project project, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -136,8 +136,8 @@ public class ProjectController {
     }
 
     @PostMapping("/project/delete/{projectId}")
-    public String deleteProject(@PathVariable int projectId, RedirectAttributes redirectAttributes, HttpSession session) {
-        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+    public String deleteProject(@PathVariable int projectId, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+        String userHasAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userHasAccess != null) {
             return userHasAccess;
         }
@@ -149,7 +149,7 @@ public class ProjectController {
 
     @GetMapping("/project/{projectId}/subproject/create")
     public String showCreateSubprojectPage(@PathVariable int projectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -160,8 +160,8 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{projectId}/subproject/create")
-    public String createSubproject(@ModelAttribute Subproject subproject, @PathVariable int projectId, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+    public String createSubproject(@ModelAttribute Subproject subproject, @PathVariable int projectId, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -173,7 +173,7 @@ public class ProjectController {
 
     @GetMapping("/project/{projectId}/subproject/{subprojectId}")
     public String showSubprojectPage(@PathVariable int projectId, @PathVariable int subprojectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -187,7 +187,7 @@ public class ProjectController {
 
     @GetMapping("/project/{projectId}/subproject/{subprojectId}/update")
     public String showUpdateSubprojectPage(@PathVariable int projectId, @PathVariable int subprojectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -198,8 +198,8 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{projectId}/subproject/{subprojectId}/update")
-    public String updateSubproject(@PathVariable int projectId, @PathVariable int subprojectId, @ModelAttribute Subproject subproject, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+    public String updateSubproject(@PathVariable int projectId, @PathVariable int subprojectId, @ModelAttribute Subproject subproject, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }

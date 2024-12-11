@@ -34,7 +34,7 @@ public class TaskController {
 
     @GetMapping("/project/{projectId}/subproject/{subprojectId}/tasks/add")
     public String showAddTaskForm(@PathVariable int projectId, @PathVariable int subprojectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, null);
         if (userAccess != null) {
             return userAccess;
         }
@@ -48,8 +48,8 @@ public class TaskController {
     }
 
     @PostMapping("/project/{projectId}/subproject/{subprojectId}/tasks/add")
-    public String addTask(@PathVariable int subprojectId, @PathVariable int projectId, @ModelAttribute Task task, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+    public String addTask(@PathVariable int subprojectId, @PathVariable int projectId, @ModelAttribute Task task, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, null);
         if (userAccess != null) {
             return userAccess;
         }
@@ -94,8 +94,8 @@ public class TaskController {
     }
 
     @PostMapping("/{projectId}/subprojects/{subprojectId}/tasks/{taskId}/delete")
-    public String deleteTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, RedirectAttributes redirectAttributes, HttpSession session) {
-        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+    public String deleteTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
+        String userHasAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userHasAccess != null) {
             return userHasAccess;
         }

@@ -5,6 +5,7 @@ import keac4.efficio.model.User;
 import keac4.efficio.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Objects;
@@ -29,11 +30,11 @@ public class ValidateAccess {
      * @param projectId          if provided, used to check if user has access to the project
      * @return either login view, error view or null based on the users session
      */
-    public String validateUserAccess(HttpSession session, RedirectAttributes redirectAttributes, Integer projectId) {
+    public String validateUserAccess(HttpSession session, Model model, RedirectAttributes redirectAttributes, Integer projectId) {
         // If the active spring profile is "dev" then bypass authentication
-        if (Objects.equals(activeProfile, "dev")) {
-            return null;
-        }
+//        if (Objects.equals(activeProfile, "dev")) {
+//            return null;
+//        }
 
         User userSession = (User) session.getAttribute("userSession");
 
@@ -47,7 +48,7 @@ public class ValidateAccess {
         if (projectId != null) {
             boolean hasAccess = userService.doesUserHaveAccess(projectId, userSession.getUserId());
             if (!hasAccess) {
-                redirectAttributes.addFlashAttribute("error", "You do not have access to this project. Ask someone with access to share it with you.");
+                model.addAttribute("error", "You do not have access to this project. Ask someone with access to share it with you.");
                 return "error/403";
             }
         }
