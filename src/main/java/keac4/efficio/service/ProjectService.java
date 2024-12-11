@@ -61,8 +61,8 @@ public class ProjectService {
         return projectRepository.findByUserID(userId);
     }
 
-    public void deleteProject(int projectId) {
-        projectRepository.deleteById(projectId);
+    public void deleteProjectById(int projectId) {
+        projectRepository.deleteProjectById(projectId);
     }
 
 }

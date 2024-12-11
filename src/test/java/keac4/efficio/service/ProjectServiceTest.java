@@ -53,6 +53,6 @@ class ProjectServiceTest {
     }
 
     @Test
-    void deleteProject() {
+    void deleteProjectById() {
     }
 }

@@ -124,7 +124,7 @@ public class ProjectRepository {
     }
 
     @Transactional
-    public void deleteById(int projectId) {
+    public void deleteProjectById(int projectId) {
         String query = "DELETE FROM projects WHERE project_id = ?";
         jdbcTemplate.update(query, projectId);
     }

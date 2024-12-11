@@ -142,7 +142,7 @@ public class ProjectController {
             return userHasAccess;
         }
 
-        projectService.deleteProject(projectId);
+        projectService.deleteProjectById(projectId);
         redirectAttributes.addFlashAttribute("success", "Project deleted successfully");
         return "redirect:/overview";
     }
