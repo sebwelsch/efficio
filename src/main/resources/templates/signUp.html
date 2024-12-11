@@ -6,13 +6,12 @@
     <title>Sign up - Efficio</title>
     <link href="/css/main.css" rel="stylesheet">
 </head>
+
 <body>
-
 <div class="container">
-    <!--  Top navigation bar  -->
-    <div th:insert="~{fragments/header :: header}"></div>
-
-    <div class="form-container">
+<!--  Top navigation bar  -->
+<div th:insert="~{fragments/header :: header}"></div>
+<div class="signup-form-container">
         <form method="post" th:action="@{/signup}" th:object="${newUser}">
             <h2>Create account</h2>
 
@@ -27,7 +26,7 @@
             </div>
 
             <div>
-                <label for="userConfirmPassword">Bekræft Password</label>
+                <label for="userConfirmPassword">Confirm Password</label>
                 <input id="userConfirmPassword" name="confirmPassword" required type="password">
             </div>
 
@@ -46,9 +45,8 @@
                 <button>Log in</button>
             </a>
         </div>
-    </div>
 
 </div>
-
+</div>
 </body>
 </html>

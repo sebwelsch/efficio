@@ -158,7 +158,7 @@ public class ProjectController {
             return userAccess;
         }
 
-        model.addAttribute("projectId", projectId);
+        model.addAttribute("project", projectService.getProjectById(projectId));
         model.addAttribute("subproject", new Subproject());
         return "createSubproject";
     }
