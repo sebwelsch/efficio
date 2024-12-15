@@ -17,9 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProjectRepositoryTest {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private ProjectRepository projectRepository;
 
     private Project createdProject;
@@ -35,10 +32,6 @@ class ProjectRepositoryTest {
 
         int projectId = projectRepository.createProject(project);
         createdProject = projectRepository.getProjectById(projectId);
-    }
-
-    @AfterEach
-    void tearDown() {
     }
 
     @Test

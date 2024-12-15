@@ -48,7 +48,7 @@ public class TaskService {
     public String deleteTask(int taskId, int subprojectId) {
         Task task = taskRepository.findTaskById(taskId);
 
-        int rowsAffected = taskRepository.deleteTaskBySubprojectId(taskId, subprojectId);
+        int rowsAffected = taskRepository.deleteTaskById(taskId);
 
         if (rowsAffected > 0) {
             //Remove time from subproject and project

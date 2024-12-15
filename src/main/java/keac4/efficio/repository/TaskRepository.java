@@ -46,9 +46,9 @@ public class TaskRepository {
                 ));
     }
 
-    public int deleteTaskBySubprojectId(int taskId, int subprojectId) {
-        String query = "DELETE FROM tasks WHERE task_id = ? AND subproject_id = ?";
-        return jdbcTemplate.update(query, taskId, subprojectId);
+    public int deleteTaskById(int taskId) {
+        String query = "DELETE FROM tasks WHERE task_id = ?";
+        return jdbcTemplate.update(query, taskId);
     }
 
 }
