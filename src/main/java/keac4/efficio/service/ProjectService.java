@@ -7,9 +7,9 @@ import keac4.efficio.repository.ProjectRepository;
 import keac4.efficio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-
 import java.util.List;
 
 @Service
@@ -39,21 +39,19 @@ public class ProjectService {
         projectRepository.createSubproject(subproject, projectId);
     }
 
-    public double calculateHoursPerDay(Project project) {
-        LocalDate startDate = LocalDate.parse(project.getStartDate());
-        LocalDate deadLine = LocalDate.parse(project.getDeadline());
+    public int calculateHoursPerDay(String projectStartDate, String projectDeadline, int expectedTime) {
+        LocalDate startDate = LocalDate.parse(projectStartDate);
+        LocalDate deadline = LocalDate.parse(projectDeadline);
 
         int workdays = 0;
-        while(!startDate.isAfter(deadLine)) {
-            if(startDate.getDayOfWeek() != DayOfWeek.SATURDAY && startDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
+        while (!startDate.isAfter(deadline)) {
+            if (startDate.getDayOfWeek() != DayOfWeek.SATURDAY && startDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
                 workdays++;
             }
             startDate = startDate.plusDays(1);
         }
-        if(workdays == 0) return 0;
-        return (double) project.getExpectedTime() / workdays;
-
-
+        if (workdays == 0) return 0;
+        return (int) expectedTime / workdays;
     }
 
     public Project getProjectById(int projectId) {
@@ -80,8 +78,8 @@ public class ProjectService {
         return projectRepository.findByUserID(userId);
     }
 
-    public void deleteProject(int projectId) {
-        projectRepository.deleteById(projectId);
+    public void deleteProjectById(int projectId) {
+        projectRepository.deleteProjectById(projectId);
     }
 
 }

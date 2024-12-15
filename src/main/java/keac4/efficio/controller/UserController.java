@@ -1,6 +1,7 @@
 package keac4.efficio.controller;
 
 import jakarta.servlet.http.HttpSession;
+import keac4.efficio.component.ValidateAccess;
 import keac4.efficio.model.User;
 import keac4.efficio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserService userService;
+    private final ValidateAccess validateAccess;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ValidateAccess validateAccess) {
         this.userService = userService;
+        this.validateAccess = validateAccess;
     }
 
     @GetMapping("/signup")
-    public String showSignUpPage(Model model) {
+    public String showSignUpPage(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        // redirect to user overview if there is a session
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, null);
+        if (userAccess == null) {
+            return "redirect:/overview";
+        }
+
         model.addAttribute("newUser", new User());
         return "signUp";
     }
@@ -47,7 +56,13 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        // redirect to user overview if there is a session
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, null);
+        if (userAccess == null) {
+            return "redirect:/overview";
+        }
+
         return "login";
     }
 

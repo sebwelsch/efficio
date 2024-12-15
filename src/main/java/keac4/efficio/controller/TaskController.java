@@ -16,25 +16,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.print.attribute.standard.PresentationDirection;
+
 @Controller
 public class TaskController {
 
     private final ProjectService projectService;
     private final ValidateAccess validateAccess;
-    private final TaskRepository taskRepository;
     private final TaskService taskService;
 
     @Autowired
-    public TaskController(ProjectService projectService, ValidateAccess validateAccess, TaskRepository taskRepository, TaskService taskService) {
+    public TaskController(ProjectService projectService, ValidateAccess validateAccess, TaskService taskService) {
         this.projectService = projectService;
         this.validateAccess = validateAccess;
-        this.taskRepository = taskRepository;
         this.taskService = taskService;
     }
 
     @GetMapping("/project/{projectId}/subproject/{subprojectId}/tasks/add")
     public String showAddTaskForm(@PathVariable int projectId, @PathVariable int subprojectId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -48,8 +48,8 @@ public class TaskController {
     }
 
     @PostMapping("/project/{projectId}/subproject/{subprojectId}/tasks/add")
-    public String addTask(@PathVariable int subprojectId, @PathVariable int projectId, @ModelAttribute Task task, HttpSession session, RedirectAttributes redirectAttributes) {
-        String userAccess = validateAccess.validateUserAccess(session, redirectAttributes, null);
+    public String addTask(@PathVariable int subprojectId, @PathVariable int projectId, @ModelAttribute Task task, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userAccess != null) {
             return userAccess;
         }
@@ -63,8 +63,23 @@ public class TaskController {
         return redirectLink;
     }
 
+    @GetMapping("/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}")
+    public String showTaskOverviewPage(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
+        if (userAccess != null) {
+            return userAccess;
+        }
+
+        return "taskOverview";
+    }
+
     @GetMapping("/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/edit")
-    public String showEditTaskForm(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model, RedirectAttributes redirectAttributes) {
+    public String showEditTaskForm(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
+        if (userAccess != null) {
+            return userAccess;
+        }
+
         Task existingTask = taskService.getTaskById(taskId);
 
         if (existingTask == null) {
@@ -83,7 +98,12 @@ public class TaskController {
     }
 
     @PostMapping("/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/edit")
-    public String updateTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, @ModelAttribute Task task, RedirectAttributes redirectAttributes) {
+    public String updateTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, @ModelAttribute Task task, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
+        if (userAccess != null) {
+            return userAccess;
+        }
+
         task.setTaskId(taskId);
         taskService.updateTask(task);
 
@@ -94,11 +114,12 @@ public class TaskController {
     }
 
     @PostMapping("/{projectId}/subprojects/{subprojectId}/tasks/{taskId}/delete")
-    public String deleteTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, RedirectAttributes redirectAttributes, HttpSession session) {
-        String userHasAccess = validateAccess.validateUserAccess(session, redirectAttributes, projectId);
+    public String deleteTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
+        String userHasAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userHasAccess != null) {
             return userHasAccess;
         }
+
         String result = taskService.deleteTask(taskId, subprojectId);
         if (result.equals("Task deleted successfully.")) {
             redirectAttributes.addFlashAttribute("success", result);

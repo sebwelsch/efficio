@@ -11,7 +11,7 @@
     <!--  Top navigation bar  -->
     <div th:insert="~{fragments/header :: header}"></div>
 
-    <div class="signup-form-container">
+    <div class="submit-form-container">
         <h1 th:text="'Edit subproject ' + ${subproject.name}"></h1>
         <form method="post"
               th:action="@{/project/{projectId}/subproject/{subprojectId}/update(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}"

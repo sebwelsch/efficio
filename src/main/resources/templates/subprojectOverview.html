@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <title>Project overview - Efficio</title>
+    <title>Subproject overview - Efficio</title>
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
@@ -21,38 +21,32 @@
                     <p class="danger" th:text="${error}"></p>
                     <p class="success" th:text="${success}"></p>
                 </div>
-                <!-- The project details -->
+                <!-- The subproject details -->
                 <div class="project-details">
-                    <h1 th:text="${project.name}"></h1>
+                    <h1 th:text="${subproject.name}"></h1>
                     <div class="project-info">
                         <div>
-                            <p th:text="${project.description}"></p>
+                            <p th:text="${subproject.description}"></p>
                         </div>
                         <div>
                             <div class="project-icons">
                                 <img class="icon" th:src="@{/images/clock.svg}">
-                                <p th:text="${project.expectedTime} + ' hours'"></p>
+                                <p th:text="${subproject.expectedTime} + ' hours'"></p>
                             </div>
                             <div class="project-icons" style="background-color: #6bc15b;">
                                 <img class="icon" th:src="@{/images/start-date.svg}">
-                                <p th:text="${project.startDate}"></p>
+                                <p th:text="${subproject.startDate}"></p>
                             </div>
                             <div class="project-icons" style="background-color: #ff5b5b;">
                                 <img class="icon" th:src="@{/images/deadline.svg}">
-                                <p th:text="${project.deadline}"></p>
+                                <p th:text="${subproject.deadline}"></p>
                             </div>
                         </div>
                     </div>
-                    <a class="success" th:href="@{/project/{projectId}/update(projectId=${project.projectId})}">
-                        <button>Edit project</button>
+                    <a class="success" th:href="@{/project/{projectId}/update(projectId=${subproject.projectId})}">
+                        <button>Edit subproject</button>
                     </a>
                 </div>
-                <form method="post" th:action="@{/project/{projectId}/share(projectId=${project.projectId})}">
-                    <label for="username">Share project with another user</label>
-                    <input id="username" placeholder="Username" th:name="username" type="text">
-
-                    <button type="submit">Share project</button>
-                </form>
             </div>
 
             <!-- Time estimation for each workday -->
@@ -90,12 +84,12 @@
         </div>
 
         <div class="layout-container">
-            <h1>Subprojects</h1>
-            <p th:if="${#lists.isEmpty(subprojects)}"><em>You don't have any subprojects yet.</em></p>
-            <div class="subprojects-icon" th:if="${not #lists.isEmpty(subprojects)}">
+            <h1>Tasks</h1>
+            <p th:if="${#lists.isEmpty(tasks)}"><em>You don't have any tasks yet.</em></p>
+            <div class="subprojects-icon" th:if="${not #lists.isEmpty(tasks)}">
                 <img class="icon" th:src="@{/images/clock.svg}">
             </div>
-            <div class="subproject-box" th:each="subproject: ${subprojects}">
+            <div class="subproject-box" th:each="task: ${tasks}">
                 <a th:href="@{/project/{projectId}/subproject/{subprojectId}(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
                     <p th:text="${subproject.name}"></p>
                     <p class="expected-time" th:text="${subproject.expectedTime}"></p>
@@ -103,8 +97,8 @@
             </div>
 
             <div>
-                <a class="success" th:href="@{/project/{projectId}/subproject/create(projectId=${project.projectId})}">
-                    <button>Create subproject</button>
+                <a class="success" th:href="@{/project/{projectId}/subproject/{subprojectId}/tasks/add(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+                    <button>Create task</button>
                 </a>
             </div>
         </div>

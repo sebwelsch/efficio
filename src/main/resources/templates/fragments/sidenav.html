@@ -1,7 +1,7 @@
 <div th:fragment="sidenav" xmlns:th="http://www.thymeleaf.org">
     <div class="side-nav">
         <h2>Your projects</h2>
-        <div th:each="project: ${projects}" class="side-nav-project-box">
+        <div class="side-nav-project-box" th:each="project: ${projects}">
             <a th:href="@{/project/{projectId}(projectId=${project.projectId})}">
                 <p th:text="${project.name}"></p>
             </a>
