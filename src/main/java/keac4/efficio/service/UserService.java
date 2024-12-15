@@ -32,4 +32,6 @@ public class UserService {
     public boolean doesUserHaveAccess(int projectId, int userId) {
         return userRepository.doesUserHaveAccess(projectId, userId);
     }
+
+
 }

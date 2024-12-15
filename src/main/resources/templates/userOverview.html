@@ -20,33 +20,44 @@
     <!--  Top navigation bar  -->
     <div th:insert="~{fragments/header :: header}"></div>
 
-    <h1>Your Projects Overview</h1>
+    <div class="project-wrapper">
+        <h1 style="margin: 15px">Your Projects Overview</h1>
 
-    <div th:if="${error} or ${success}">
-        <p class="danger" th:text="${error}"></p>
-        <p class="success" th:text="${success}"></p>
-    </div>
+        <!-- If user has projects -->
+        <div th:if="${not #lists.isEmpty(projects)}">
+            <a href="/project/create" class="success"><button>Create new project</button></a>
+        </div>
 
-    <!-- If user has no projects -->
-    <div th:if="${#lists.isEmpty(projects)}">
-        <p>You don't have any projects yet.</p>
-    </div>
+        <div th:if="${error} or ${success}">
+            <p class="danger" th:text="${error}"></p>
+            <p class="success" th:text="${success}"></p>
+        </div>
+        <!-- Projects overview container -->
+        <div class="projects-container">
+            <div>
+                <!-- If user has no projects -->
+                <div th:if="${#lists.isEmpty(projects)}">
+                    <p>You don't have any projects yet.</p>
+                    <a href="/project/create" class="success"><button>Create new project</button></a>
+                </div>
+                <div class="project-box" th:each="project : ${projects}">
+                    <a class="project-link" th:href="@{/project/{projectId}(projectId=${project.projectId})}">
+                        <h3 th:text="${project.name}"></h3>
+                        <p><strong>Description:</strong> <span th:text="${project.description}"></span></p>
+                        <p><strong>Start Date:</strong> <span th:text="${project.startDate}"></span></p>
+                        <p><strong>Deadline:</strong> <span th:text="${project.deadline}"></span></p>
+                    </a>
 
-    <!-- Projects overview container -->
-    <div class="projects-container">
-        <div class="project-box" th:each="project : ${projects}">
-            <div class="project-box">
-                <a class="project-link" th:href="@{/project/{projectId}(projectId=${project.projectId})}">
-                    <h3 th:text="${project.name}"></h3>
-                    <p><strong>Description:</strong> <span th:text="${project.description}"></span></p>
-                    <p><strong>Start Date:</strong> <span th:text="${project.startDate}"></span></p>
-                    <p><strong>Deadline:</strong> <span th:text="${project.deadline}"></span></p>
-                </a>
-                <form class="danger" method="post"
-                      onsubmit="confirmDeletion(event)"
-                      th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}">
-                    <button type="submit">Delete</button>
-                </form>
+                    <!-- Buttons container (delete and create buttons) -->
+                    <div class="button-container">
+                        <!-- Delete button form -->
+                        <form class="delete-form" method="post" onsubmit="confirmDeletion(event)"
+                              th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}">
+                            <button class="delete-button" type="submit">Delete</button>
+                        </form>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -11,31 +11,33 @@
     <!--  Top navigation bar  -->
     <div th:insert="~{fragments/header :: header}"></div>
 
-    <h1>Create a new project</h1>
-    <form method="post" th:action="@{/project/create}" th:object="${project}">
-        <div>
-            <label for="name">Name:</label>
-            <input id="name" required th:field="*{name}" type="text"/>
-        </div>
+    <div class="signup-form-container">
+        <h1 >Create a new project</h1>
+        <form method="post" th:action="@{/project/create}" th:object="${project}">
+            <div>
+                <label for="name">Name:</label>
+                <input id="name" required th:field="*{name}" type="text"/>
+            </div>
 
-        <div>
-            <label for="description">Description:</label>
-            <textarea id="description" th:field="*{description}"></textarea>
-        </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea id="description" th:field="*{description}"></textarea>
+            </div>
 
-        <div>
-            <label for="startDate">Start Date:</label>
-            <input id="startDate" th:field="*{startDate}" type="date"/>
-        </div>
+            <div>
+                <label for="startDate">Start Date:</label>
+                <input id="startDate" th:field="*{startDate}" type="date"/>
+            </div>
 
-        <div>
-            <label for="deadline">Deadline:</label>
-            <input id="deadline" th:field="*{deadline}" type="date"/>
-        </div>
-        <div class="success">
-            <button type="submit">Create project</button>
-        </div>
-    </form>
+            <div>
+                <label for="deadline">Deadline:</label>
+                <input id="deadline" th:field="*{deadline}" type="date"/>
+            </div>
+            <div class="success">
+                <button type="submit">Create project</button>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

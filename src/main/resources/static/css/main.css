@@ -215,43 +215,81 @@ button:hover {
     margin-right: 5px;
 }
 
+.create-project-button:hover {
+    background-color: #45a049;
+}
+
+.create-project-button-top {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    width: 30%;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 20px; /* Space below the button */
+    display: inline-block;
+    cursor: pointer;
+}
+
+.projects-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
 .project-link {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit the color */
-    display: block; /* Make <a> a block-level element */
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 0;
+    border: none;
+    text-align: left;
 }
 
 .project-box {
-    position: relative; /* This is necessary for positioning the delete button inside */
+    background-color: #fff;
     border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease;
-    display: block; /* Ensures the box behaves like a block element */
-    cursor: pointer; /* Change cursor to pointer when hovering over the box */
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    margin: 15px;
 }
 
-.project-box:hover {
-    background-color: #f0f0f0; /* Change background color on hover */
+.project-box:hover{
+    background-color: #b1b1b1;
+}
+
+.project-link h3 {
+    font-size: 25px;
+    color: #67adff;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.button-container {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .delete-form {
-    position: absolute; /* Position the delete form inside the box */
-    top: 10px; /* Adjust the position from the top */
-    right: 10px; /* Adjust the position from the right */
-    margin: 0; /* Remove any margin */
+    margin: 0;
 }
 
 .delete-button {
-    background-color: #ff4d4d; /* Red background for the delete button */
-    color: white; /* White text */
+    background-color: #ff0000;
+    color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
 }
 
 .delete-button:hover {
-    background-color: #e60000; /* Darker red on hover */
+    background-color: #870b0b;
 }
 
 
@@ -358,4 +396,39 @@ Time usage per day columns
     color: white;
     font-size: 16px;
     padding-bottom: 5px;
+}
+
+.signup-form-container{
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    align-content: center;
+}
+
+
+.signup-form-container form div{
+    margin-bottom: 10px;
+}
+
+.signup-form-container form label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+.signup-form-container form input {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
