@@ -23,6 +23,7 @@
                 </div>
                 <!-- The project details -->
                 <div class="project-details">
+                    <p><em>Project</em></p>
                     <h1 th:text="${project.name}"></h1>
                     <div class="project-info">
                         <div>
@@ -91,6 +92,7 @@
 
         <div class="layout-container">
             <h1>Subprojects</h1>
+            <p>All subprojects for <strong th:text="${project.name}"></strong></p>
             <p th:if="${#lists.isEmpty(subprojects)}"><em>You don't have any subprojects yet.</em></p>
             <div class="subprojects-icon" th:if="${not #lists.isEmpty(subprojects)}">
                 <img class="icon" th:src="@{/images/clock.svg}">

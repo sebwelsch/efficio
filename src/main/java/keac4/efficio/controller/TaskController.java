@@ -3,8 +3,9 @@ package keac4.efficio.controller;
 import jakarta.servlet.http.HttpSession;
 import keac4.efficio.component.ValidateAccess;
 import keac4.efficio.model.Project;
+import keac4.efficio.model.Subproject;
 import keac4.efficio.model.Task;
-import keac4.efficio.repository.TaskRepository;
+import keac4.efficio.model.User;
 import keac4.efficio.service.ProjectService;
 import keac4.efficio.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.print.attribute.standard.PresentationDirection;
+import java.util.List;
 
 @Controller
 public class TaskController {
@@ -70,50 +71,22 @@ public class TaskController {
             return userAccess;
         }
 
+        // This is used for the side-nav to show the users projects
+        User userSession = (User) session.getAttribute("userSession");
+        model.addAttribute("projects", projectService.getProjectsByUserId(userSession.getUserId()));
+
+        Subproject subproject = projectService.getSubprojectById(subprojectId);
+        model.addAttribute("subproject", subproject);
+
+        List<Task> tasks = taskService.getAllTasksBySubprojectId(subprojectId);
+        model.addAttribute("tasks", tasks);
+
+        Task task = taskService.getTaskById(taskId);
+        model.addAttribute("task", task);
         return "taskOverview";
     }
 
-    @GetMapping("/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/edit")
-    public String showEditTaskForm(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
-        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
-        if (userAccess != null) {
-            return userAccess;
-        }
-
-        Task existingTask = taskService.getTaskById(taskId);
-
-        if (existingTask == null) {
-            redirectAttributes.addFlashAttribute("error", "Task not found");
-            String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
-            return redirectLink;
-
-        }
-
-        model.addAttribute("task", existingTask);
-        model.addAttribute("taskId", taskId);
-        model.addAttribute("projectId", projectId);
-        model.addAttribute("subprojectId", subprojectId);
-
-        return "editTask";
-    }
-
-    @PostMapping("/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/edit")
-    public String updateTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, @ModelAttribute Task task, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
-        String userAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
-        if (userAccess != null) {
-            return userAccess;
-        }
-
-        task.setTaskId(taskId);
-        taskService.updateTask(task);
-
-        redirectAttributes.addFlashAttribute("success", "Task updated successfully!");
-        String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
-        return redirectLink;
-
-    }
-
-    @PostMapping("/{projectId}/subprojects/{subprojectId}/tasks/{taskId}/delete")
+    @PostMapping("/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/delete")
     public String deleteTask(@PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
         String userHasAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
         if (userHasAccess != null) {
@@ -126,6 +99,8 @@ public class TaskController {
         } else {
             redirectAttributes.addFlashAttribute("error", result);
         }
-        return "redirect:/subProjectOverview/";
+
+        String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
+        return redirectLink;
     }
 }

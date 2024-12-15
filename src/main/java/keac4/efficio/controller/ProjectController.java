@@ -4,8 +4,10 @@ import jakarta.servlet.http.HttpSession;
 import keac4.efficio.component.ValidateAccess;
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
+import keac4.efficio.model.Task;
 import keac4.efficio.model.User;
 import keac4.efficio.service.ProjectService;
+import keac4.efficio.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +22,13 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final ValidateAccess validateAccess;
+    private final TaskService taskService;
 
     @Autowired
-    public ProjectController(ProjectService projectService, ValidateAccess validateAccess) {
+    public ProjectController(ProjectService projectService, ValidateAccess validateAccess, TaskService taskService) {
         this.projectService = projectService;
         this.validateAccess = validateAccess;
+        this.taskService = taskService;
     }
 
     @GetMapping("/overview")
@@ -90,7 +94,7 @@ public class ProjectController {
 
         Project project = projectService.getProjectById(projectId);
 
-        int hoursPerDay = projectService.calculateHoursPerDay(project.getStartDate(), project.getDeadline(), project.getExpectedTime());
+        double hoursPerDay = projectService.calculateHoursPerDay(project.getStartDate(), project.getDeadline(), project.getExpectedTime());
         model.addAttribute("hoursPerDay", hoursPerDay);
 
         model.addAttribute("project", project);
@@ -182,16 +186,17 @@ public class ProjectController {
             return userAccess;
         }
 
+        // This is used for the side-nav to show the users projects
         User userSession = (User) session.getAttribute("userSession");
         model.addAttribute("projects", projectService.getProjectsByUserId(userSession.getUserId()));
 
         Subproject subproject = projectService.getSubprojectById(subprojectId);
         model.addAttribute("subproject", subproject);
 
-        Project project = projectService.getProjectById(projectId);
-        model.addAttribute("project", project);
+        List<Task> tasks = taskService.getAllTasksBySubprojectId(subprojectId);
+        model.addAttribute("tasks", tasks);
 
-        int hoursPerDay = projectService.calculateHoursPerDay(subproject.getStartDate(), subproject.getDeadline(), subproject.getExpectedTime());
+        double hoursPerDay = projectService.calculateHoursPerDay(subproject.getStartDate(), subproject.getDeadline(), subproject.getExpectedTime());
         model.addAttribute("hoursPerDay", hoursPerDay);
         return "subprojectOverview";
     }
@@ -219,5 +224,17 @@ public class ProjectController {
         redirectAttributes.addFlashAttribute("success", "Successfully updated project");
         String redirectLink = "redirect:/project/" + projectId + "/subproject/" + subprojectId;
         return redirectLink;
+    }
+
+    @PostMapping("/project/{projectId}/subproject/{subprojectId}/delete")
+    public String deleteSubproject(@PathVariable int projectId, @PathVariable int subprojectId, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+        String userHasAccess = validateAccess.validateUserAccess(session, model, redirectAttributes, projectId);
+        if (userHasAccess != null) {
+            return userHasAccess;
+        }
+
+        projectService.deleteSubprojectById(subprojectId);
+        redirectAttributes.addFlashAttribute("success", "Project deleted successfully");
+        return "redirect:/project/" + projectId;
     }
 }

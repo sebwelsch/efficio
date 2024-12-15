@@ -8,6 +8,8 @@ import keac4.efficio.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskService {
 
@@ -25,6 +27,7 @@ public class TaskService {
         task.setSubprojectId(task.getSubprojectId());
         taskRepository.saveNewTask(task);
 
+        //Add time to subproject and project
         Subproject subproject = projectRepository.getSubprojectById(task.getSubprojectId());
         int newExpectedTimeSubproject = subproject.getExpectedTime() + task.getExpectedTime();
         projectRepository.updateExpectedTimeSubproject(subproject.getSubprojectId(), newExpectedTimeSubproject);
@@ -38,18 +41,25 @@ public class TaskService {
         return taskRepository.findTaskById(taskId);
     }
 
-    public void updateTask(Task task) {
-        taskRepository.updateTask(task);
-    }
-
-
-    public boolean doesUserHaveAccess(int projectId, int userId) {
-        return false;
+    public List<Task> getAllTasksBySubprojectId(int subprojectId) {
+        return taskRepository.getAllTasksBySubprojectId(subprojectId);
     }
 
     public String deleteTask(int taskId, int subprojectId) {
+        Task task = taskRepository.findTaskById(taskId);
+
         int rowsAffected = taskRepository.deleteTaskBySubprojectId(taskId, subprojectId);
+
         if (rowsAffected > 0) {
+            //Remove time from subproject and project
+            Subproject subproject = projectRepository.getSubprojectById(task.getSubprojectId());
+            int newExpectedTimeSubproject = subproject.getExpectedTime() - task.getExpectedTime();
+            projectRepository.updateExpectedTimeSubproject(subproject.getSubprojectId(), newExpectedTimeSubproject);
+
+            Project project = projectRepository.getProjectById(subproject.getProjectId());
+            int newExpectedTimeProject = project.getExpectedTime() - task.getExpectedTime();
+            projectRepository.updateExpectedTimeProject(project.getProjectId(), newExpectedTimeProject);
+
             return "Task deleted successfully.";
         } else {
             return "Task not found for the given subproject.";

@@ -123,10 +123,14 @@ public class ProjectRepository {
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Project.class), userId);
     }
 
-    @Transactional
     public void deleteProjectById(int projectId) {
         String query = "DELETE FROM projects WHERE project_id = ?";
         jdbcTemplate.update(query, projectId);
+    }
+
+    public void deleteSubprojectById(int subprojectId) {
+        String query = "DELETE FROM subprojects WHERE subproject_id = ?";
+        jdbcTemplate.update(query, subprojectId);
     }
 
     public void updateExpectedTimeSubproject(int subprojectId, int newExpectedTime) {

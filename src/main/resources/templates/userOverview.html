@@ -5,13 +5,10 @@
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>Your projects - Efficio</title>
     <link href="/css/main.css" rel="stylesheet">
-    <!-- JavaScript for confirmation -->
+    <!-- JavaScript for deletion confirmation -->
     <script>
-        function confirmDeletion(event) {
-            event.stopPropagation();
-            if (!confirm("Are you sure you want to delete this project?")) {
-                event.preventDefault();
-            }
+        function confirmDeletion() {
+            return confirm("Are you sure you want to delete this subproject?");
         }
     </script>
 </head>
@@ -52,7 +49,7 @@
                     <p><strong>Deadline:</strong> <span th:text="${project.deadline}"></span></p>
                 </a>
                 <!-- Delete project button form -->
-                <form class="delete-form" method="post" onsubmit="confirmDeletion(event)"
+                <form class="delete-form" method="post" onsubmit="return confirmDeletion()"
                       th:action="@{/project/delete/{projectId}(projectId=${project.projectId})}">
                     <button class="delete-button" type="submit">Delete</button>
                 </form>

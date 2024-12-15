@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Task overview - Efficio</title>
+    <link href="/css/main.css" rel="stylesheet">
+    <!-- JavaScript for deletion confirmation -->
+    <script>
+        function confirmDeletion() {
+            return confirm("Are you sure you want to delete this subproject?");
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <!--  Top navigation bar  -->
+    <div th:insert="~{fragments/header :: header}"></div>
+
+    <div class="main-content">
+        <!-- Side-navigation bar for projects -->
+        <div th:insert="~{fragments/sidenav :: sidenav}"></div>
+
+        <div class="project-wrapper">
+            <div class="layout-container">
+                <div th:if="${error} or ${success}">
+                    <p class="danger" th:text="${error}"></p>
+                    <p class="success" th:text="${success}"></p>
+                </div>
+                <div class="project-icons">
+                    <a class="project-link" th:href="@{/project/{projectId}/subproject/{subprojectId}(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+                        <img style="display: inline-block" th:src="@{/images/arrow_back.svg}">
+                        <p style="display: inline-block; font-size: 16px">Back to subproject</p>
+                    </a>
+                </div>
+                <!-- The subproject details -->
+                <div class="project-details">
+                    <p><em>Task</em></p>
+                    <h1 th:text="${task.name}"></h1>
+                    <div class="project-info">
+                        <div>
+                            <p th:text="${task.description}"></p>
+                        </div>
+                        <div>
+                            <div class="project-icons">
+                                <img class="icon" th:src="@{/images/clock.svg}">
+                                <p th:text="${task.expectedTime} + ' hours'"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Delete task button form -->
+                    <form class="danger" method="post" onsubmit="return confirmDeletion()"
+                          th:action="@{/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}/delete(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId}, taskId=${task.taskId})}">
+                        <button type="submit">Delete task</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="layout-container">
+            <h1>Tasks</h1>
+            <p>All tasks for <strong th:text="${subproject.name}"></strong></p>
+            <p th:if="${#lists.isEmpty(tasks)}"><em>You don't have any tasks yet.</em></p>
+            <div class="subprojects-icon" th:if="${not #lists.isEmpty(tasks)}">
+                <img class="icon" th:src="@{/images/clock.svg}">
+            </div>
+            <div class="subproject-box" th:each="task: ${tasks}">
+                <a th:href="@{/project/{projectId}/subproject/{subprojectId}/tasks/{taskId}(projectId=${subproject.projectId}, subprojectId=${task.subprojectId}, taskId=${task.taskId})}">
+                    <p th:text="${task.name}"></p>
+                    <p class="expected-time" th:text="${task.expectedTime}"></p>
+                </a>
+            </div>
+
+            <div>
+                <a class="success" th:href="@{/project/{projectId}/subproject/{subprojectId}/tasks/add(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+                    <button>Create task</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

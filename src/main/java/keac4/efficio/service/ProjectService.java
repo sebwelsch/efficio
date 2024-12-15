@@ -39,11 +39,11 @@ public class ProjectService {
         projectRepository.createSubproject(subproject, projectId);
     }
 
-    public int calculateHoursPerDay(String projectStartDate, String projectDeadline, int expectedTime) {
+    public double calculateHoursPerDay(String projectStartDate, String projectDeadline, int expectedTime) {
         LocalDate startDate = LocalDate.parse(projectStartDate);
         LocalDate deadline = LocalDate.parse(projectDeadline);
 
-        int workdays = 0;
+        double workdays = 0;
         while (!startDate.isAfter(deadline)) {
             if (startDate.getDayOfWeek() != DayOfWeek.SATURDAY && startDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
                 workdays++;
@@ -51,7 +51,8 @@ public class ProjectService {
             startDate = startDate.plusDays(1);
         }
         if (workdays == 0) return 0;
-        return (int) expectedTime / workdays;
+        double hoursPerDay = (double) expectedTime / workdays;
+        return Math.round(hoursPerDay * 100.0) / 100.0; // Round to two decimal places
     }
 
     public Project getProjectById(int projectId) {
@@ -82,4 +83,13 @@ public class ProjectService {
         projectRepository.deleteProjectById(projectId);
     }
 
+    public void deleteSubprojectById(int subprojectId) {
+        Subproject subproject = projectRepository.getSubprojectById(subprojectId);
+        //Remove time from project
+        Project project = projectRepository.getProjectById(subproject.getProjectId());
+        int newExpectedTimeProject = project.getExpectedTime() - subproject.getExpectedTime();
+        projectRepository.updateExpectedTimeProject(project.getProjectId(), newExpectedTimeProject);
+
+        projectRepository.deleteSubprojectById(subprojectId);
+    }
 }

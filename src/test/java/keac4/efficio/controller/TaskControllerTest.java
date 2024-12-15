@@ -25,14 +25,6 @@ class TaskControllerTest {
     }
 
     @Test
-    void showEditTaskForm() {
-    }
-
-    @Test
-    void updateTask() {
-    }
-
-    @Test
     void deleteTask() {
     }
 }
