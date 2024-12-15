@@ -74,11 +74,11 @@ class ProjectRepositoryTest {
         List<Subproject> savedSubprojects = projectRepository.getAllSubprojectsByProjectId(createdProject.getProjectId());
 
         assertAll("Test if all subproject variables are the same",
-                () -> assertEquals(subproject.getName(), savedSubprojects.get(1).getName()),
-                () -> assertEquals(subproject.getDescription(), savedSubprojects.get(1).getDescription()),
-                () -> assertEquals(subproject.getStartDate(), savedSubprojects.get(1).getStartDate()),
-                () -> assertEquals(subproject.getDeadline(), savedSubprojects.get(1).getDeadline()),
-                () -> assertEquals(subproject.getExpectedTime(), savedSubprojects.get(1).getExpectedTime())
+                () -> assertEquals(subproject.getName(), savedSubprojects.getFirst().getName()),
+                () -> assertEquals(subproject.getDescription(), savedSubprojects.getFirst().getDescription()),
+                () -> assertEquals(subproject.getStartDate(), savedSubprojects.getFirst().getStartDate()),
+                () -> assertEquals(subproject.getDeadline(), savedSubprojects.getFirst().getDeadline()),
+                () -> assertEquals(subproject.getExpectedTime(), savedSubprojects.getFirst().getExpectedTime())
         );
     }
 
