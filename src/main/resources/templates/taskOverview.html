@@ -28,7 +28,8 @@
                     <p class="success" th:text="${success}"></p>
                 </div>
                 <div class="project-icons">
-                    <a class="project-link" th:href="@{/project/{projectId}/subproject/{subprojectId}(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+                    <a class="project-link"
+                       th:href="@{/project/{projectId}/subproject/{subprojectId}(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
                         <img style="display: inline-block" th:src="@{/images/arrow_back.svg}">
                         <p style="display: inline-block; font-size: 16px">Back to subproject</p>
                     </a>
@@ -72,7 +73,8 @@
             </div>
 
             <div>
-                <a class="success" th:href="@{/project/{projectId}/subproject/{subprojectId}/tasks/add(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+                <a class="success"
+                   th:href="@{/project/{projectId}/subproject/{subprojectId}/tasks/add(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
                     <button>Create task</button>
                 </a>
             </div>

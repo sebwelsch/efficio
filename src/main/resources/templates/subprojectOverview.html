@@ -56,7 +56,8 @@
                             </div>
                         </div>
                     </div>
-                    <a class="success" th:href="@{/project/{projectId}/subproject/{subprojectId}/update(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+                    <a class="success"
+                       th:href="@{/project/{projectId}/subproject/{subprojectId}/update(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
                         <button>Edit subproject</button>
                     </a>
                     <!-- Delete subproject button form -->
@@ -116,7 +117,8 @@
             </div>
 
             <div>
-                <a class="success" th:href="@{/project/{projectId}/subproject/{subprojectId}/tasks/add(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
+                <a class="success"
+                   th:href="@{/project/{projectId}/subproject/{subprojectId}/tasks/add(projectId=${subproject.projectId}, subprojectId=${subproject.subprojectId})}">
                     <button>Create task</button>
                 </a>
             </div>

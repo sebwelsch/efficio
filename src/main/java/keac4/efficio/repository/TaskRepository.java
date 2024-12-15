@@ -1,6 +1,5 @@
 package keac4.efficio.repository;
 
-import keac4.efficio.model.Subproject;
 import keac4.efficio.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
