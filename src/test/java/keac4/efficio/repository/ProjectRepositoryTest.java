@@ -23,7 +23,6 @@ class ProjectRepositoryTest {
     private ProjectRepository projectRepository;
 
     private Project createdProject;
-    private Subproject createdSubproject;
 
     @BeforeEach
     void setUp() {
@@ -36,17 +35,6 @@ class ProjectRepositoryTest {
 
         int projectId = projectRepository.createProject(project);
         createdProject = projectRepository.getProjectById(projectId);
-
-        // Creating a subproject that can be used in the tests
-        Subproject subproject = new Subproject();
-        subproject.setName("Test subproject");
-        subproject.setDescription("This is a subproject for test purposes");
-        subproject.setStartDate("2024-12-05");
-        subproject.setDeadline("2024-12-22");
-
-        projectRepository.createSubproject(subproject, createdProject.getProjectId());
-        List<Subproject> subprojectlist = projectRepository.getAllSubprojectsByProjectId(createdProject.getProjectId());
-        createdSubproject = subprojectlist.getFirst();
     }
 
     @AfterEach
@@ -101,6 +89,7 @@ class ProjectRepositoryTest {
         updatedProject.setDescription("I have updated the description of this project");
         updatedProject.setStartDate("2025-05-12");
         updatedProject.setDeadline("2025-11-25");
+        // Update the project that was made in setUp()
         updatedProject.setProjectId(createdProject.getProjectId());
 
         projectRepository.updateProject(updatedProject);
@@ -118,9 +107,7 @@ class ProjectRepositoryTest {
     void deleteProjectById() {
         projectRepository.deleteProjectById(createdProject.getProjectId());
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            projectRepository.getProjectById(createdProject.getProjectId());
-        });
+        Exception exception = assertThrows(Exception.class, () -> projectRepository.getProjectById(createdProject.getProjectId()));
 
         assertNotNull(exception);
     }

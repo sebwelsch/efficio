@@ -8,22 +8,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Objects;
-
 @Component
 public class ValidateAccess {
 
     private final UserService userService;
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
 
     public ValidateAccess(UserService userService) {
         this.userService = userService;
     }
 
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
-
     /**
-     * Used to validate if a user has access to an endpoint
+     * Used to validate if a user has access to an endpoint. If user does have access it will return null.
      *
      * @param session            to check if there is a HTTPSession
      * @param redirectAttributes add flash attributes to a redirect

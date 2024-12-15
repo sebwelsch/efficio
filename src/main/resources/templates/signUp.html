@@ -6,12 +6,13 @@
     <title>Sign up - Efficio</title>
     <link href="/css/main.css" rel="stylesheet">
 </head>
-
 <body>
 <div class="container">
-<!--  Top navigation bar  -->
-<div th:insert="~{fragments/header :: header}"></div>
-<div class="signup-form-container">
+    <!--  Top navigation bar  -->
+    <div th:insert="~{fragments/header :: header}"></div>
+
+    <!--  Form for creating account  -->
+    <div class="submit-form-container">
         <form method="post" th:action="@{/signup}" th:object="${newUser}">
             <h2>Create account</h2>
 
@@ -38,15 +39,14 @@
             <button type="submit">Sign up</button>
         </form>
 
-
-        <div>
+        <div class="helper">
             <p>Already have an account?</p>
             <a href="/login">
                 <button>Log in</button>
             </a>
         </div>
 
-</div>
+    </div>
 </div>
 </body>
 </html>

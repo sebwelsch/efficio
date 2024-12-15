@@ -24,6 +24,7 @@ body {
     color: #fff;
     border: none;
     padding: 10px 20px;
+    margin: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -55,11 +56,12 @@ body {
     padding: 20px;
 }
 
+/* Side-nav */
 .side-nav {
     width: 250px;
     background-color: #fff;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 5px;
     height: 80vh;
 }
 
@@ -170,14 +172,14 @@ button:hover {
     text-align: center;
 }
 
+.layout-container button {
+    margin: 15px;
+}
+
 .subprojects-icon {
     display: block;
     margin-left: auto;
     margin-right: 30px;
-}
-
-.layout-container button {
-    margin: 15px;
 }
 
 .subproject-box {
@@ -215,23 +217,6 @@ button:hover {
     margin-right: 5px;
 }
 
-.create-project-button:hover {
-    background-color: #45a049;
-}
-
-.create-project-button-top {
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    width: 30%;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-bottom: 20px; /* Space below the button */
-    display: inline-block;
-    cursor: pointer;
-}
-
 .projects-container {
     display: flex;
     flex-direction: column;
@@ -239,6 +224,7 @@ button:hover {
     justify-content: center;
     margin-top: 10px;
 }
+
 .project-link {
     text-decoration: none;
     color: #333;
@@ -251,14 +237,14 @@ button:hover {
 .project-box {
     background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 10px;
-    width: 100%;
+    border-radius: 5px;
+    width: 600px;
     box-sizing: border-box;
     padding: 15px;
     margin: 15px;
 }
 
-.project-box:hover{
+.project-box:hover {
     background-color: #b1b1b1;
 }
 
@@ -267,17 +253,6 @@ button:hover {
     color: #67adff;
     margin-bottom: 5px;
     align-items: center;
-}
-
-.button-container {
-    position: relative;
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.delete-form {
-    margin: 0;
 }
 
 .delete-button {
@@ -293,11 +268,7 @@ button:hover {
 }
 
 
-/*
-*
-HEADER STYLING
-*
-*/
+/* Header */
 header {
     display: flex;
     align-items: center;
@@ -350,11 +321,7 @@ header {
     margin-left: 10px;
 }
 
-/*
-*
-Time usage per day columns
-*
- */
+/* Time usage per day chart */
 .bottom-container {
     background-color: #e0e0e0;
     margin: 20px;
@@ -388,7 +355,7 @@ Time usage per day columns
     width: 50px;
     min-height: 50px;
     max-height: 350px;
-    background-color: #4CAF50;
+    background-color: #45a349;
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
@@ -398,37 +365,40 @@ Time usage per day columns
     padding-bottom: 5px;
 }
 
-.signup-form-container{
+/* Styling for our different forms */
+.submit-form-container {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 5px;
     padding: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    align-content: center;
 }
 
-
-.signup-form-container form div{
-    margin-bottom: 10px;
-}
-
-.signup-form-container form label {
+.submit-form-container form label {
     display: block;
     font-size: 14px;
     margin-bottom: 5px;
     font-weight: normal;
 }
 
-.signup-form-container form input {
+.submit-form-container form input {
     width: 100%;
     padding: 5px;
     font-size: 16px;
-    border-radius: 4px;
+    border-radius: 5px;
     margin-bottom: 10px;
+}
+
+.submit-form-container form textarea {
+    width: 300px;
+    height: 150px;
+}
+
+.helper {
+    margin: 10px;
+    text-align: center;
 }

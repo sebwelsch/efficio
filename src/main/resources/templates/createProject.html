@@ -11,8 +11,8 @@
     <!--  Top navigation bar  -->
     <div th:insert="~{fragments/header :: header}"></div>
 
-    <div class="signup-form-container">
-        <h1 >Create a new project</h1>
+    <div class="submit-form-container">
+        <h1>Create a new project</h1>
         <form method="post" th:action="@{/project/create}" th:object="${project}">
             <div>
                 <label for="name">Name:</label>

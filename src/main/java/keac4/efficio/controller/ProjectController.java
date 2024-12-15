@@ -89,8 +89,10 @@ public class ProjectController {
 
 
         Project project = projectService.getProjectById(projectId);
-        double hoursPerDay = projectService.calculateHoursPerDay(project);
-        project = projectService.getProjectById(projectId);
+
+        int hoursPerDay = projectService.calculateHoursPerDay(project.getStartDate(), project.getDeadline(), project.getExpectedTime());
+        model.addAttribute("hoursPerDay", hoursPerDay);
+
         model.addAttribute("project", project);
 
         User userSession = (User) session.getAttribute("userSession");
@@ -98,8 +100,6 @@ public class ProjectController {
 
         List<Subproject> subprojects = projectService.getAllSubprojectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
-
-        model.addAttribute("hoursPerDay", Math.ceil(hoursPerDay));
 
         return "projectOverview";
     }
@@ -182,11 +182,18 @@ public class ProjectController {
             return userAccess;
         }
 
+        User userSession = (User) session.getAttribute("userSession");
+        model.addAttribute("projects", projectService.getProjectsByUserId(userSession.getUserId()));
+
         Subproject subproject = projectService.getSubprojectById(subprojectId);
         model.addAttribute("subproject", subproject);
+
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
-        return "subProjectOverview";
+
+        int hoursPerDay = projectService.calculateHoursPerDay(subproject.getStartDate(), subproject.getDeadline(), subproject.getExpectedTime());
+        model.addAttribute("hoursPerDay", hoursPerDay);
+        return "subprojectOverview";
     }
 
     @GetMapping("/project/{projectId}/subproject/{subprojectId}/update")
