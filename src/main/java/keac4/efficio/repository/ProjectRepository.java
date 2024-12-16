@@ -54,9 +54,17 @@ public class ProjectRepository {
     }
 
     // Link the project to a user by adding an entry in the project_users table
-    public void linkProjectToUser(int projectId, int userId) {
-        String query = "INSERT INTO project_users (project_id, user_id) VALUES (?, ?)";
-        jdbcTemplate.update(query, projectId, userId);
+    public boolean linkProjectToUser(int projectId, int userId) {
+        String checkQuery = "SELECT COUNT(*) FROM project_users WHERE project_id = ? AND user_id = ?";
+        int count = jdbcTemplate.queryForObject(checkQuery, Integer.class, projectId, userId);
+
+        if (count == 0) {
+            String query = "INSERT INTO project_users (project_id, user_id) VALUES (?, ?)";
+            jdbcTemplate.update(query, projectId, userId);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public List<Subproject> getAllSubprojectsByProjectId(int projectId) {

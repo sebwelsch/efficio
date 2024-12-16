@@ -22,22 +22,12 @@ class UserRepositoryTest {
     @Autowired
     private ProjectRepository projectRepository;
 
-    private User user1;
     private Project testProject;
 
     @BeforeEach
     void setUp() {
         passwordEncoder = new BCryptPasswordEncoder();
-        user1 = createUser1();
         testProject = createTestProject();
-    }
-
-    private User createUser1() {
-        User user1 = new User();
-        user1.setUsername("testUser");
-        user1.setPassword(passwordEncoder.encode("123"));
-        userRepository.saveNewUser(user1);
-        return userRepository.findByUsername(user1.getUsername());
     }
 
     private Project createTestProject() {
@@ -62,5 +52,20 @@ class UserRepositoryTest {
         // Check that password is hashed
         assertNotEquals("abc123", savedUser.getPassword());
         assertTrue(passwordEncoder.matches("abc123", savedUser.getPassword()));
+    }
+
+    @Test
+    void linkProjectToUser() {
+        User user = new User();
+        user.setUsername("testUser");
+        user.setPassword(passwordEncoder.encode("123"));
+        userRepository.saveNewUser(user);
+        User testUser1 = userRepository.findByUsername(user.getUsername());
+
+        projectRepository.linkProjectToUser(testProject.getProjectId(), testUser1.getUserId());
+
+        boolean userHasAccess = userRepository.doesUserHaveAccess(testProject.getProjectId(), testUser1.getUserId());
+
+        assertTrue(userHasAccess);
     }
 }
