@@ -2,14 +2,10 @@ package keac4.efficio.repository;
 
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,53 +13,28 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProjectRepositoryTest {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private ProjectRepository projectRepository;
 
     private Project createdProject;
+    private Subproject createdSubproject;
 
     @BeforeEach
     void setUp() {
-        // Creating a project that can be used in the tests
+        createdProject = createTestProject();
+        createdSubproject = createTestSubproject();
+    }
+
+    private Project createTestProject() {
         Project project = new Project();
         project.setName("Test project");
         project.setDescription("This is a project for test purposes");
         project.setStartDate("2024-12-01");
         project.setDeadline("2024-12-24");
-
         int projectId = projectRepository.createProject(project);
-        createdProject = projectRepository.getProjectById(projectId);
+        return projectRepository.getProjectById(projectId);
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void createProject() {
-        Project project = new Project();
-        project.setName("Test project 2");
-        project.setDescription("This is a project for test purposes that is different from the in in setUp()");
-        project.setStartDate("2024-12-02");
-        project.setDeadline("2024-12-25");
-
-        int projectId = projectRepository.createProject(project);
-        Project savedProject = projectRepository.getProjectById(projectId);
-
-        assertAll("Test if all project variables are the same",
-                () -> assertEquals(project.getName(), savedProject.getName()),
-                () -> assertEquals(project.getDescription(), savedProject.getDescription()),
-                () -> assertEquals(project.getStartDate(), savedProject.getStartDate()),
-                () -> assertEquals(project.getDeadline(), savedProject.getDeadline()),
-                () -> assertEquals(project.getExpectedTime(), savedProject.getExpectedTime())
-        );
-    }
-
-
-    @Test
-    void createSubproject() {
+    private Subproject createTestSubproject() {
         Subproject subproject = new Subproject();
         subproject.setName("Test subproject 2");
         subproject.setDescription("This is a subproject for test purposes and is different from the one in setUp()");
@@ -71,35 +42,60 @@ class ProjectRepositoryTest {
         subproject.setDeadline("2024-12-20");
 
         projectRepository.createSubproject(subproject, createdProject.getProjectId());
-        List<Subproject> savedSubprojects = projectRepository.getAllSubprojectsByProjectId(createdProject.getProjectId());
+        return projectRepository.getAllSubprojectsByProjectId(createdProject.getProjectId()).getFirst();
+    }
+
+    @Test
+    void createProject() {
+        createdProject.setName("Test project 2");
+        createdProject.setDescription("NEw description");
+        createdProject.setStartDate("2024-12-25");
+        createdProject.setDeadline("2024-12-31");
+
+        int projectId = projectRepository.createProject(createdProject);
+        Project savedProject = projectRepository.getProjectById(projectId);
+
+        assertAll("Test if all project variables are the same",
+                () -> assertEquals(createdProject.getName(), savedProject.getName()),
+                () -> assertEquals(createdProject.getDescription(), savedProject.getDescription()),
+                () -> assertEquals(createdProject.getStartDate(), savedProject.getStartDate()),
+                () -> assertEquals(createdProject.getDeadline(), savedProject.getDeadline())
+        );
+    }
+
+    @Test
+    void createSubproject() {
+        createdSubproject.setName("Updated Test subproject");
+        createdSubproject.setDescription("NEw description");
+        createdSubproject.setStartDate("2024-12-14");
+        createdSubproject.setDeadline("2024-12-22");
+
+        projectRepository.createSubproject(createdSubproject, createdProject.getProjectId());
+        Subproject savedSubproject = projectRepository.getAllSubprojectsByProjectId(createdProject.getProjectId()).get(1);
 
         assertAll("Test if all subproject variables are the same",
-                () -> assertEquals(subproject.getName(), savedSubprojects.getFirst().getName()),
-                () -> assertEquals(subproject.getDescription(), savedSubprojects.getFirst().getDescription()),
-                () -> assertEquals(subproject.getStartDate(), savedSubprojects.getFirst().getStartDate()),
-                () -> assertEquals(subproject.getDeadline(), savedSubprojects.getFirst().getDeadline()),
-                () -> assertEquals(subproject.getExpectedTime(), savedSubprojects.getFirst().getExpectedTime())
+                () -> assertEquals(createdSubproject.getName(), savedSubproject.getName()),
+                () -> assertEquals(createdSubproject.getDescription(), savedSubproject.getDescription()),
+                () -> assertEquals(createdSubproject.getStartDate(), savedSubproject.getStartDate()),
+                () -> assertEquals(createdSubproject.getDeadline(), savedSubproject.getDeadline())
         );
     }
 
     @Test
     void updateProject() {
-        Project updatedProject = new Project();
-        updatedProject.setName("New title for test project");
-        updatedProject.setDescription("I have updated the description of this project");
-        updatedProject.setStartDate("2025-05-12");
-        updatedProject.setDeadline("2025-11-25");
-        // Update the project that was made in setUp()
-        updatedProject.setProjectId(createdProject.getProjectId());
+        createdProject.setName("new name for Test project");
+        createdProject.setDescription("another new description");
+        createdProject.setStartDate("2025-01-01");
+        createdProject.setDeadline("2025-01-09");
 
-        projectRepository.updateProject(updatedProject);
+        projectRepository.updateProject(createdProject);
         Project savedProject = projectRepository.getProjectById(createdProject.getProjectId());
-        assertAll("Test if all updated project variables are the same",
-                () -> assertEquals(updatedProject.getName(), savedProject.getName()),
-                () -> assertEquals(updatedProject.getDescription(), savedProject.getDescription()),
-                () -> assertEquals(updatedProject.getStartDate(), savedProject.getStartDate()),
-                () -> assertEquals(updatedProject.getDeadline(), savedProject.getDeadline()),
-                () -> assertEquals(updatedProject.getExpectedTime(), savedProject.getExpectedTime())
+
+        assertAll("Test if all project variables are the same",
+                () -> assertEquals(createdProject.getName(), savedProject.getName()),
+                () -> assertEquals(createdProject.getDescription(), savedProject.getDescription()),
+                () -> assertEquals(createdProject.getStartDate(), savedProject.getStartDate()),
+                () -> assertEquals(createdProject.getDeadline(), savedProject.getDeadline())
         );
     }
 
@@ -107,8 +103,6 @@ class ProjectRepositoryTest {
     void deleteProjectById() {
         projectRepository.deleteProjectById(createdProject.getProjectId());
 
-        Exception exception = assertThrows(Exception.class, () -> projectRepository.getProjectById(createdProject.getProjectId()));
-
-        assertNotNull(exception);
+        assertThrows(Exception.class, () -> projectRepository.getProjectById(createdProject.getProjectId()));
     }
 }

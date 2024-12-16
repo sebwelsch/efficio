@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Service
@@ -30,9 +31,12 @@ public class ProjectService {
         projectRepository.linkProjectToUser(projectId, userId);
     }
 
-    public void shareProject(int projectId, String username) {
+    public boolean shareProject(int projectId, String username) {
         User user = userRepository.findByUsername(username);
-        projectRepository.linkProjectToUser(projectId, user.getUserId());
+        if (user == null) {
+            return false;
+        }
+        return projectRepository.linkProjectToUser(projectId, user.getUserId());
     }
 
     public void createSubproject(Subproject subproject, int projectId) {
@@ -40,6 +44,11 @@ public class ProjectService {
     }
 
     public double calculateHoursPerDay(String projectStartDate, String projectDeadline, int expectedTime) {
+        if (projectStartDate == null || projectStartDate.isEmpty() ||
+                projectDeadline == null || projectDeadline.isEmpty()) {
+            return 0;
+        }
+
         LocalDate startDate = LocalDate.parse(projectStartDate);
         LocalDate deadline = LocalDate.parse(projectDeadline);
 
@@ -50,7 +59,9 @@ public class ProjectService {
             }
             startDate = startDate.plusDays(1);
         }
+
         if (workdays == 0) return 0;
+
         double hoursPerDay = (double) expectedTime / workdays;
         return Math.round(hoursPerDay * 100.0) / 100.0; // Round to two decimal places
     }

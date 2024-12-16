@@ -22,9 +22,7 @@ public class TaskService {
         this.projectRepository = projectRepository;
     }
 
-
     public void saveNewTask(Task task) {
-        task.setSubprojectId(task.getSubprojectId());
         taskRepository.saveNewTask(task);
 
         //Add time to subproject and project
@@ -48,7 +46,7 @@ public class TaskService {
     public String deleteTask(int taskId, int subprojectId) {
         Task task = taskRepository.findTaskById(taskId);
 
-        int rowsAffected = taskRepository.deleteTaskBySubprojectId(taskId, subprojectId);
+        int rowsAffected = taskRepository.deleteTaskById(taskId);
 
         if (rowsAffected > 0) {
             //Remove time from subproject and project

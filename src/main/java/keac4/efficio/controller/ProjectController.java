@@ -115,7 +115,12 @@ public class ProjectController {
             return userAccess;
         }
 
-        projectService.shareProject(projectId, username);
+        boolean sharedAccess = projectService.shareProject(projectId, username);
+        if (!sharedAccess) {
+            redirectAttributes.addFlashAttribute("error", "Username does not exist or project is already shared with this user");
+        } else {
+            redirectAttributes.addFlashAttribute("success", "Project was shared with user " + username);
+        }
         return "redirect:/project/" + projectId;
     }
 
