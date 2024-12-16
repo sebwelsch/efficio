@@ -3,7 +3,6 @@ package keac4.efficio.repository;
 import keac4.efficio.model.Project;
 import keac4.efficio.model.Subproject;
 import keac4.efficio.model.Task;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,72 +11,73 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(properties = "spring.profiles.active=test")
 class TaskRepositoryTest {
 
     @Autowired
-    private ProjectRepository projectRepository;
+    private TaskRepository taskRepository;
 
     private Project createdProject;
     private Subproject createdSubproject;
     private Task createdTask;
 
     @Autowired
-    private TaskRepository taskRepository;
+    private ProjectRepository projectRepository;
 
     @BeforeEach
     void setUp() {
-        // Creating a project that can be used in the tests
+        createdProject = createTestProject();
+        createdSubproject = createTestSubproject();
+        createdTask = createTestTask();
+    }
+
+    private Project createTestProject() {
         Project project = new Project();
         project.setName("Test project");
         project.setDescription("This is a project for test purposes");
         project.setStartDate("2024-12-01");
         project.setDeadline("2024-12-24");
-
         int projectId = projectRepository.createProject(project);
-        createdProject = projectRepository.getProjectById(projectId);
+        return projectRepository.getProjectById(projectId);
+    }
 
-        // Creating a subproject that can be used in the tests
+    private Subproject createTestSubproject() {
         Subproject subproject = new Subproject();
         subproject.setName("Test subproject");
         subproject.setDescription("This is a subproject for test purposes");
         subproject.setStartDate("2024-12-05");
         subproject.setDeadline("2024-12-22");
-
         projectRepository.createSubproject(subproject, createdProject.getProjectId());
-        List<Subproject> subprojectlist = projectRepository.getAllSubprojectsByProjectId(createdProject.getProjectId());
-        createdSubproject = subprojectlist.getFirst();
+        return projectRepository.getAllSubprojectsByProjectId(createdProject.getProjectId()).getFirst();
+    }
 
-        // Creating a task for test use
+    private Task createTestTask() {
         Task task = new Task();
         task.setName("Test task");
         task.setDescription("This is a task for test purposes");
         task.setExpectedTime(5);
-        task.setSubprojectId(createdSubproject.getSubprojectId());
-
+        task.setSubprojectId(1);
 
         taskRepository.saveNewTask(task);
-        List<Task> savedTasks = taskRepository.getAllTasksBySubprojectId(task.getSubprojectId());
-        createdTask = savedTasks.getFirst();
+        return taskRepository.getAllTasksBySubprojectId(task.getSubprojectId()).getFirst();
     }
 
     @Test
     void saveNewTask() {
-        Task task = new Task();
-        task.setName("Test task 2");
-        task.setDescription("This is a task for test purposes that is different from the in in setUp()");
-        task.setExpectedTime(11);
-        task.setSubprojectId(createdSubproject.getSubprojectId());
+        Task newTask = new Task();
+        newTask.setName("Test task 2");
+        newTask.setDescription("This is a task for test purposes that is different from the one in setUp()");
+        newTask.setExpectedTime(11);
+        newTask.setSubprojectId(1);
 
-        taskRepository.saveNewTask(task);
-        List<Task> savedTasks = taskRepository.getAllTasksBySubprojectId(task.getSubprojectId());
+        taskRepository.saveNewTask(newTask);
+        Task savedTask = taskRepository.getAllTasksBySubprojectId(newTask.getSubprojectId()).get(1);
 
         assertAll("Test if all task variables are the same",
-                () -> assertEquals(task.getName(), savedTasks.get(1).getName()),
-                () -> assertEquals(task.getDescription(), savedTasks.get(1).getDescription()),
-                () -> assertEquals(task.getExpectedTime(), savedTasks.get(1).getExpectedTime())
+                () -> assertEquals(newTask.getName(), savedTask.getName()),
+                () -> assertEquals(newTask.getDescription(), savedTask.getDescription()),
+                () -> assertEquals(newTask.getExpectedTime(), savedTask.getExpectedTime())
         );
     }
 
@@ -87,7 +87,6 @@ class TaskRepositoryTest {
         taskRepository.deleteTaskById(taskId);
 
         Task task = taskRepository.findTaskById(taskId);
-
         assertNull(task);
     }
 }

@@ -22,9 +22,7 @@ public class TaskService {
         this.projectRepository = projectRepository;
     }
 
-
     public void saveNewTask(Task task) {
-        task.setSubprojectId(task.getSubprojectId());
         taskRepository.saveNewTask(task);
 
         //Add time to subproject and project
