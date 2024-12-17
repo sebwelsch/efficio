@@ -12,8 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ValidateAccess {
 
     private final UserService userService;
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
+//    @Value("${spring.profiles.active}")
+//    private String activeProfile;
 
     public ValidateAccess(UserService userService) {
         this.userService = userService;
@@ -29,9 +29,9 @@ public class ValidateAccess {
      */
     public String validateUserAccess(HttpSession session, Model model, RedirectAttributes redirectAttributes, Integer projectId) {
         // If the active spring profile is "dev" then bypass authentication
-        if (activeProfile.equals("dev")) {
-            return null;
-        }
+//        if (activeProfile.equals("dev")) {
+//            return null;
+//        }
 
         User userSession = (User) session.getAttribute("userSession");
 
