@@ -29,9 +29,9 @@ public class ValidateAccess {
      */
     public String validateUserAccess(HttpSession session, Model model, RedirectAttributes redirectAttributes, Integer projectId) {
         // If the active spring profile is "dev" then bypass authentication
-//        if (Objects.equals(activeProfile, "dev")) {
-//            return null;
-//        }
+        if (activeProfile.equals("dev")) {
+            return null;
+        }
 
         User userSession = (User) session.getAttribute("userSession");
 
