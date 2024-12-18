@@ -55,7 +55,6 @@ public class TaskController {
             return userAccess;
         }
 
-        Project.setProjectID(projectId);
         task.setSubprojectId(subprojectId);
         taskService.saveNewTask(task);
 
