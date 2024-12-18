@@ -4,54 +4,43 @@
 
 Efficio is a tool that gives you an easy overview of all your projects and helps with your time management.
 
-Access it here: https://efficioc4.azurewebsites.net/
-
-## Description
-
-An in-depth paragraph about your project and overview of use.
+Access it online here: https://efficioc4.azurewebsites.net/
 
 ## Getting Started
+If you want to run the application locally here are the steps to do so.
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+* Java 21
 
 ### Installing
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+* Clone repository
+* Open program folder in Intellij
+* To automatically insert some data on startup, rename this file
+```
+src/main/resources/dataInsert.sql
+```
+to this
+```
+src/main/resources/data.sql
+```
+This will insert three users with some data. Usernames are:
+```
+santa
+elf1
+elf2
+```
+The password to all three users is "123"
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
-
-## Help
-
-Any advice for common problems or issues.
-```
-command to run if program contains helper info
-```
+* Open program folder in Intellij
+* In the file `src/main/resources/application.properties` add this line `spring.profiles.active=dev` to use H2 database
+* Go to file `src/main/java/keac4/efficio/EfficioApplication.java` and press "Run"
 
 ## Authors
 
 - [Mads Gerstenberg Jacobsen](https://github.com/SkynetHD)
 - [Martin Vestergaard Storm](https://github.com/MartinVStorm)
 - [Sebastian Welsch Jakobsgaard](https://github.com/sebwelsch)
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
