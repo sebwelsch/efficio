@@ -36,7 +36,7 @@ The password to all three users is "123"
 ### Executing program
 
 * Open program folder in Intellij
-* In the file `src/main/resources/application.properties` add this line `spring.profiles.active=dev` to use H2 database
+* In the file `src/main/resources/application.properties` add this line `spring.profiles.active=test` to use H2 database
 * Go to file `src/main/java/keac4/efficio/EfficioApplication.java` and press "Run"
 
 ## Authors
