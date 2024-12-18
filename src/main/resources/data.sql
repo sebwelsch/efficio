@@ -1,4 +1,5 @@
 INSERT INTO users (username, password)
+-- The password for these are all 123. The one we insert here is the hashed password
 VALUES ('santa', '$2a$10$H5GJscoD5p.U6Hyu1/cunu3z4QZ/HksjKU8h.YT1opL0xPrJHawJO'),
        ('elf1', '$2a$10$H5GJscoD5p.U6Hyu1/cunu3z4QZ/HksjKU8h.YT1opL0xPrJHawJO'),
        ('elf2', '$2a$10$H5GJscoD5p.U6Hyu1/cunu3z4QZ/HksjKU8h.YT1opL0xPrJHawJO');
